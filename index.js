@@ -1,16 +1,17 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
 app.use(cors());
 app.use(express.json());
 
-let users = [];
-
 app.get('/', (req, res) => {
-    res.send('Your free backend is running perfectly!');
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
+
+let users = [];
 
 app.post('/api/signup', (req, res) => {
     const { email, password } = req.body;
@@ -31,6 +32,6 @@ app.post('/api/forgot-password', (req, res) => {
     res.json({ message: 'Password reset processed. No email sent per system rules.' });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
