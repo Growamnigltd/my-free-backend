@@ -108,13 +108,13 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight">Featured Properties Hub</h2>
-                <p class="text-slate-500 mt-1">Explore our exclusive selection of verified listings across Nigeria.</p>
+                <p class="text-slate-500 mt-1">Explore our balanced selection of 30 verified listings across Nigeria (10 Lands, 10 Duplexes, 10 Rental Apartments).</p>
             </div>
             <div class="mt-4 md:mt-0 flex gap-2 overflow-x-auto pb-2">
-                <button onclick="filterProperties('all')" class="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl shadow">All</button>
-                <button onclick="filterProperties('Duplex')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Duplexes</button>
-                <button onclick="filterProperties('Apartment')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Apartments</button>
-                <button onclick="filterProperties('Land')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Land Parcels</button>
+                <button onclick="filterProperties('all')" class="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl shadow">All (30)</button>
+                <button onclick="filterProperties('Duplex')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Duplexes (10)</button>
+                <button onclick="filterProperties('Apartment')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Rental Apartments (10)</button>
+                <button onclick="filterProperties('Land')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Lands for Sale (10)</button>
             </div>
         </div>
 
@@ -203,14 +203,24 @@
                     </div>
                 </div>
 
-                <!-- Password Reset Fields (Hidden by default) -->
-                <div id="resetAuthFields" style="display: none;">
-                    <p class="text-xs text-slate-500 mb-3">Enter your registered email address and your new password below.</p>
+                <!-- Password Reset Step 1: Request Code -->
+                <div id="resetEmailFields" style="display: none;">
+                    <p class="text-xs text-slate-500 mb-3">Enter your registered email address to receive a secure 6-digit verification code.</p>
                     <div class="mb-3">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Registered Email</label>
                         <input type="email" id="resetEmail" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm" placeholder="name@example.com">
                     </div>
-                    <div>
+                    <button type="button" onclick="sendResetTokenEmail()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs transition mb-2">Send Verification Code</button>
+                </div>
+
+                <!-- Password Reset Step 2: Verify Code & Set New Password -->
+                <div id="resetVerifyFields" style="display: none;">
+                    <p class="text-xs text-slate-500 mb-3">A 6-digit verification code has been sent to your email. Enter it below along with your new password.</p>
+                    <div class="mb-3">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">6-Digit Code</label>
+                        <input type="text" id="resetTokenInput" maxlength="6" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm tracking-widest text-center font-bold" placeholder="123456">
+                    </div>
+                    <div class="mb-3">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">New Password</label>
                         <input type="password" id="newPassword" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm" placeholder="••••••••">
                     </div>
@@ -291,8 +301,8 @@
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Category</label>
                         <select id="propCategory" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm">
                             <option value="Duplex">Duplex</option>
-                            <option value="Apartment">Apartment</option>
-                            <option value="Land">Land</option>
+                            <option value="Apartment">Apartment (Rental)</option>
+                            <option value="Land">Land (For Sale)</option>
                         </select>
                     </div>
                 </div>
@@ -346,17 +356,43 @@
             return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
-        // PRE-LOADED 60 PROPERTIES
+        // PRE-LOADED EXACTLY 30 PROPERTIES (10 LANDS, 10 DUPLEXES, 10 APARTMENTS FOR RENT)
         const initialProperties = [
+            // --- 10 DUPLEXES FOR SALE ---
             {title: "Luxury 5-Bedroom Detached Duplex", location: "Ikoyi, Lagos", price: "450,000,000", category: "Duplex", desc: "Fully serviced with private swimming pool, smart home automation, and 24-hour armed security.", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600"},
             {title: "Modern 4-Bedroom Semi-Detached Duplex", location: "Lekki Phase 1, Lagos", price: "180,000,000", category: "Duplex", desc: "Contemporary architecture, stamped concrete compound, and boys' quarters (BQ).", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=600"},
             {title: "Exquisite 6-Bedroom Mansion", location: "Asokoro, Abuja", price: "950,000,000", category: "Duplex", desc: "Ultra-luxury hilltop residence featuring panoramic city views, elevator, and underground parking.", img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=600"},
             {title: "Spacious 4-Bedroom Terrace Duplex", location: "Victoria Island, Lagos", price: "220,000,000", category: "Duplex", desc: "Prime commercial/residential district proximity, private balconies, and backup generator.", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=600"},
             {title: "Brand New 5-Bedroom Duplex", location: "Guzape, Abuja", price: "320,000,000", category: "Duplex", desc: "Elegant finishing, pop ceilings, fitted kitchen, and serene neighborhood.", img: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=600"},
-            {title: "Cozy 3-Bedroom Serviced Apartment", location: "Victoria Island, Lagos", price: "90,000,000", category: "Apartment", desc: "High-rise building with elevator, gym, and rooftop pool.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600"},
-            {title: "Luxury 2-Bedroom Apartment", location: "Eko Atlantic City, Lagos", price: "280,000,000", category: "Apartment", desc: "Ocean view, world-class urban infrastructure, and uninterrupted power.", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600"},
-            {title: "600sqm Residential Plot", location: "Guzape, Abuja", price: "120,000,000", category: "Land", desc: "Ready for immediate construction with C of O and approved building layout.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
-            {title: "1,000sqm Commercial Land", location: "Central Business District, Abuja", price: "500,000,000", category: "Land", desc: "Prime location suited for high-rise office complex or plaza development.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"}
+            {title: "Contemporary 4-Bedroom Duplex", location: "Ajah, Lagos", price: "95,000,000", category: "Duplex", desc: "Gated community, spacious rooms, clean water system, and ample parking space.", img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=600"},
+            {title: "Executive 5-Bedroom Smart Duplex", location: "Maitama, Abuja", price: "750,000,000", category: "Duplex", desc: "Fully automated lighting, security systems, private garden, and top-tier finishing.", img: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=600"},
+            {title: "Magnificent 4-Bedroom Duplex", location: "GRA Phase 2, Port Harcourt", price: "210,000,000", category: "Duplex", desc: "Serene secure estate with paved roads, pop ceilings, and modern kitchen cabinetry.", img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=600"},
+            {title: "Luxury 5-Bedroom Duplex with BQ", location: "Wuse 2, Abuja", price: "480,000,000", category: "Duplex", desc: "Central location, exquisite architectural design, walk-in closets, and jacuzzi.", img: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&q=80&w=600"},
+            {title: "Classic 4-Bedroom Duplex", location: "Ikeja GRA, Lagos", price: "310,000,000", category: "Duplex", desc: "Close to international airport, serene environment, and high rental yield potential.", img: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&q=80&w=600"},
+
+            // --- 10 APARTMENTS FOR RENT ---
+            {title: "Cozy 3-Bedroom Serviced Apartment (Rent)", location: "Victoria Island, Lagos", price: "7,500,000 /yr", category: "Apartment", desc: "High-rise building with elevator, gym, rooftop pool, and 24-hour electricity service.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600"},
+            {title: "Luxury 2-Bedroom Apartment (Rent)", location: "Eko Atlantic City, Lagos", price: "15,000,000 /yr", category: "Apartment", desc: "Stunning ocean view, world-class urban infrastructure, and uninterrupted power supply.", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600"},
+            {title: "Spacious 3-Bedroom Flat (Rent)", location: "Lekki Phase 1, Lagos", price: "5,000,000 /yr", category: "Apartment", desc: "Fitted kitchen, all rooms ensuite, water treatment plant, and secure gatehouse.", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=600"},
+            {title: "Executive 2-Bedroom Apartment (Rent)", location: "Utako, Abuja", price: "4,500,000 /yr", category: "Apartment", desc: "Close to commercial hubs, paved access roads, ample parking space, and uniform security.", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=600"},
+            {title: "Modern 1-Bedroom Studio Apartment (Rent)", location: "Yaba, Lagos", price: "2,200,000 /yr", category: "Apartment", desc: "Ideal for young professionals, fast fiber internet connection, and constant power.", img: "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?auto=format&fit=crop&q=80&w=600"},
+            {title: "Luxury 3-Bedroom Penthouse Apartment (Rent)", location: "Ikoyi, Lagos", price: "25,000,000 /yr", category: "Apartment", desc: "Top floor panoramic views, private elevator access, concierge services, and rooftop lounge.", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600"},
+            {title: "Chic 2-Bedroom Apartment (Rent)", location: "Garki, Abuja", price: "3,800,000 /yr", category: "Apartment", desc: "Clean borehole water, prepaid electricity meter, quiet gated compound, and fitted wardrobes.", img: "https://images.unsplash.com/photo-1502005229762-cf1b4da7c5d6?auto=format&fit=crop&q=80&w=600"},
+            {title: "Serviced 3-Bedroom Flat (Rent)", location: "GRA, Port Harcourt", price: "6,000,000 /yr", category: "Apartment", desc: "Dedicated transformer, backup generator, uniformed guards, and tiled interior finishing.", img: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=600"},
+            {title: "Cozy 2-Bedroom Apartment (Rent)", location: "Surulere, Lagos", price: "3,000,000 /yr", category: "Apartment", desc: "Accessible location near stadium, friendly neighborhood, and reliable security.", img: "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&q=80&w=600"},
+            {title: "Luxury 4-Bedroom Serviced Apartment (Rent)", location: "Jabi, Abuja", price: "10,000,000 /yr", category: "Apartment", desc: "Overlooking Jabi lake, swimming pool access, fully equipped gym, and elevator service.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600"},
+
+            // --- 10 LANDS FOR SALE ---
+            {title: "600sqm Residential Plot with C of O", location: "Guzape, Abuja", price: "120,000,000", category: "Land", desc: "Ready for immediate construction with certified C of O and approved building layout.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "1,000sqm Commercial Land", location: "Central Business District, Abuja", price: "500,000,000", category: "Land", desc: "Prime location suited for high-rise office complex or plaza development.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Dry 500sqm Plot in Gated Estate", location: "Sangotedo, Lekki, Lagos", price: "35,000,000", category: "Land", desc: "Fast-developing neighborhood with perimeter fencing, drainage, and electricity.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "1,200sqm Waterfront Land Parcel", location: "Banana Island, Ikoyi, Lagos", price: "1,200,000,000", category: "Land", desc: "Ultra-exclusive waterfront parcel with shoreline protection and pristine views.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Plots of Dry Land (Per Plot)", location: "Ibeju Lekki, Lagos", price: "15,000,000", category: "Land", desc: "Proximity to the Lekki Free Trade Zone and Dangote Refinery. High ROI potential.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "800sqm Residential Plot", location: "Katampe Extension, Abuja", price: "90,000,000", category: "Land", desc: "Hilly terrain with breathtaking views of the capital city, fully serviced estate.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "2,000sqm Industrial/Warehouse Land", location: "Ikeja Industrial Zone, Lagos", price: "700,000,000", category: "Land", desc: "Spacious land designated for manufacturing, warehousing, or logistics hub.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "500sqm Dry Land in Secure Estate", location: "Lugbe, Abuja", price: "25,000,000", category: "Land", desc: "Close to airport road, buy and build condition with active residential occupants.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "650sqm Residential Plot", location: "GRA Phase 3, Port Harcourt", price: "150,000,000", category: "Land", desc: "Prime land in an established high-end residential neighborhood with complete titles.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "10 Acres of Dry Agricultural/Mixed Land", location: "Kuje, Abuja", price: "80,000,000", category: "Land", desc: "Massive expanse of fertile land suitable for estate development or commercial farming.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"}
         ];
 
         function renderInitialProperties() {
@@ -389,6 +425,7 @@
         let isHumanVerified = false;
         let currentUser = null;
         let uploadedImageBase64 = '';
+        let generatedResetCode = null;
 
         function openAuthModal(mode) {
             document.getElementById('authModal').classList.remove('hidden');
@@ -401,7 +438,8 @@
             if (authMode === 'reset') {
                 authMode = 'signin';
                 document.getElementById('standardAuthFields').style.display = 'block';
-                document.getElementById('resetAuthFields').style.display = 'none';
+                document.getElementById('resetEmailFields').style.display = 'none';
+                document.getElementById('resetVerifyFields').style.display = 'none';
                 document.getElementById('authTabsContainer').classList.remove('hidden');
                 document.getElementById('forgotLinkContainer').style.display = 'block';
             }
@@ -412,13 +450,15 @@
             const tabSignin = document.getElementById('tabSignin');
             const tabSignup = document.getElementById('tabSignup');
             const standardFields = document.getElementById('standardAuthFields');
-            const resetFields = document.getElementById('resetAuthFields');
+            const resetEmailFields = document.getElementById('resetEmailFields');
+            const resetVerifyFields = document.getElementById('resetVerifyFields');
             const forgotContainer = document.getElementById('forgotLinkContainer');
             const tabsBox = document.getElementById('authTabsContainer');
 
             tabsBox.classList.remove('hidden');
             standardFields.style.display = 'block';
-            resetFields.style.display = 'none';
+            resetEmailFields.style.display = 'none';
+            resetVerifyFields.style.display = 'none';
             forgotContainer.style.display = 'block';
 
             if (mode === 'signin') {
@@ -430,7 +470,8 @@
             } else if (mode === 'reset') {
                 tabsBox.classList.add('hidden');
                 standardFields.style.display = 'none';
-                resetFields.style.display = 'block';
+                resetEmailFields.style.display = 'block';
+                resetVerifyFields.style.display = 'none';
                 forgotContainer.style.display = 'none';
             }
             resetCaptcha();
@@ -441,6 +482,42 @@
             e.preventDefault();
             toggleAuthTab('reset');
         });
+
+        // Send Reset Token Email via EmailJS
+        function sendResetTokenEmail() {
+            const email = document.getElementById('resetEmail').value.trim();
+            if (!email) {
+                alert('Please enter your registered email address first.');
+                return;
+            }
+
+            const registeredUsers = JSON.parse(localStorage.getItem('growam_users')) || [];
+            const userExists = registeredUsers.some(u => u.email === email);
+            if (!userExists) {
+                alert('No account found with this email address.');
+                return;
+            }
+
+            // Generate secure 6-digit random code
+            generatedResetCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+            const resetEmailParams = {
+                to_email: email,
+                reply_to: email,
+                message: `Your password reset verification code for Growam Nig Ltd (RC 6893170) is: ${generatedResetCode}. Enter this code on the website to set your new password.`
+            };
+
+            emailjs.send(SERVICE_ID, TEMPLATE_ID, resetEmailParams, PUBLIC_KEY)
+                .then(() => {
+                    alert('Verification code sent successfully to your email! Please check your inbox.');
+                    document.getElementById('resetEmailFields').style.display = 'none';
+                    document.getElementById('resetVerifyFields').style.display = 'block';
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Failed to send verification email. Please check your network or try again.');
+                });
+        }
 
         // Captcha Drag Logic
         const dragBtn = document.getElementById('dragCaptchaBtn');
@@ -461,7 +538,7 @@
             dragBox.style.background = '#e2e8f0';
             authSubmitBtn.disabled = true;
             authSubmitBtn.className = "w-full py-3.5 bg-slate-300 text-slate-500 font-bold rounded-xl shadow transition cursor-not-allowed";
-            authSubmitBtn.innerText = authMode === 'reset' ? "Reset Password" : (authMode === 'signup' ? "Create Free Account" : "Sign In to Account");
+            authSubmitBtn.innerText = authMode === 'reset' ? "Verify Code & Reset Password" : (authMode === 'signup' ? "Create Free Account" : "Sign In to Account");
         }
 
         function startDrag(clientX) {
@@ -523,8 +600,14 @@
             const registeredUsers = JSON.parse(localStorage.getItem('growam_users')) || [];
 
             if (authMode === 'reset') {
-                const email = document.getElementById('resetEmail').value;
+                const email = document.getElementById('resetEmail').value.trim();
+                const enteredToken = document.getElementById('resetTokenInput').value.trim();
                 const rawNewPassword = document.getElementById('newPassword').value;
+
+                if (enteredToken !== generatedResetCode) {
+                    alert('Invalid verification code. Please enter the exact 6-digit code sent to your email.');
+                    return;
+                }
                 
                 const userIndex = registeredUsers.findIndex(u => u.email === email);
                 if (userIndex === -1) {
@@ -536,7 +619,7 @@
                 registeredUsers[userIndex].password = hashedNewPassword;
                 localStorage.setItem('growam_users', JSON.stringify(registeredUsers));
 
-                alert('Password successfully reset! You can now sign in with your new password.');
+                alert('Password successfully reset with email verification! You can now sign in.');
                 toggleAuthTab('signin');
                 return;
             }
