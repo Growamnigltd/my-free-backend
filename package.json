@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/Growamnigltd/my-free-backend/issues"
   },
-  "homepage": "https://github.com/Growamnigltd/my-free-backend#readme"
+  "homepage": "https://github.com/Growamnigltd/my-free-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.6"
+  }
 }
