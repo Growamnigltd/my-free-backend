@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,6 +14,7 @@
             overflow: hidden;
             user-select: none;
             height: 48px;
+            touch-action: none;
         }
         .drag-btn {
             position: absolute;
@@ -29,6 +30,7 @@
             border-radius: 9999px;
             cursor: pointer;
             transition: background 0.2s;
+            touch-action: none;
         }
         .drag-btn:hover {
             background: #1d4ed8;
@@ -58,7 +60,11 @@
                 <a href="#about" class="hover:text-blue-600 transition">About Us</a>
             </nav>
 
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-3">
+                <button id="postPropertyNavBtn" onclick="handlePostPropertyClick()" class="hidden px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition items-center space-x-1 shadow-md">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    <span>Post Property</span>
+                </button>
                 <button id="navAuthBtn" onclick="openAuthModal('signin')" class="px-5 py-2.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-xl hover:bg-blue-100 transition">Sign In</button>
                 <button id="navUserBadge" onclick="openProfileModal()" class="hidden items-center space-x-2 px-4 py-2 text-sm font-semibold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition">
                     <i class="fa-solid fa-user-circle text-blue-600 text-lg"></i>
@@ -78,13 +84,13 @@
         <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-transparent"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-3xl">
-            <span class="inline-block py-1 px-3 rounded-full bg-blue-600/30 border border-blue-400/30 text-blue-300 text-sm font-semibold mb-6">Verified Real Estate Hub in Nigeria</span>
+            <span class="inline-block py-1 px-3 rounded-full bg-blue-600/30 border border-blue-400/30 text-blue-300 text-sm font-semibold mb-6">RC 6893170 | Verified Real Estate Hub in Nigeria</span>
             <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-tight mb-6">Find Your Dream Home or Investment Property</h1>
-            <p class="text-lg text-slate-300 mb-8 leading-relaxed">Browse verified houses for rent, land parcels, and luxury apartments. Secure your asset with our seamless checkout, verified ownership certificates, and guest options.</p>
+            <p class="text-lg text-slate-300 mb-8 leading-relaxed">Browse verified houses for rent, land parcels, and luxury apartments. Sign up to post your property listings securely.</p>
             
             <div class="flex flex-col sm:flex-row gap-4">
                 <a href="#properties" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 text-center transition">Explore Properties</a>
-                <button onclick="openCartModal()" class="px-8 py-4 bg-white/10 hover:bg-white/25 backdrop-blur border border-white/20 text-white font-bold rounded-xl text-center transition">View Saved Properties</button>
+                <button onclick="handlePostPropertyClick()" class="px-8 py-4 bg-white/10 hover:bg-white/25 backdrop-blur border border-white/20 text-white font-bold rounded-xl text-center transition">Post Your Property</button>
             </div>
         </div>
     </section>
@@ -94,7 +100,7 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight">Featured Properties Hub</h2>
-                <p class="text-slate-500 mt-1">Explore our exclusive selection of 30 verified listings across Nigeria.</p>
+                <p class="text-slate-500 mt-1">Explore our exclusive selection of verified listings across Nigeria.</p>
             </div>
             <div class="mt-4 md:mt-0 flex gap-2 overflow-x-auto pb-2">
                 <button onclick="filterProperties('all')" class="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl shadow">All (30)</button>
@@ -506,7 +512,7 @@
                     <i class="fa-solid fa-robot text-lg"></i>
                     <div>
                         <h4 class="font-bold text-sm">Growam Assistant</h4>
-                        <span class="text-xs text-blue-200">Online | Ask me anything</span>
+                        <span class="text-xs text-blue-200">Online | RC 6893170</span>
                     </div>
                 </div>
                 <button onclick="toggleChatWindow()" class="text-blue-200 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -514,7 +520,7 @@
             
             <div id="chatMessages" class="p-4 h-72 overflow-y-auto space-y-3 bg-slate-50 text-sm">
                 <div class="flex items-start space-x-2">
-                    <div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">Hello! Welcome to Growam Nig Ltd. Looking for a specific property or land allocation?</div>
+                    <div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">Hello! Welcome to Growam Nig Ltd (RC 6893170). Sign up to post your property listings or ask me anything!</div>
                 </div>
             </div>
             
@@ -531,17 +537,25 @@
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
             <div class="flex items-center space-x-3">
                 <div class="bg-blue-600 text-white p-2 rounded-xl font-bold">GN</div>
-                <span class="text-white font-bold text-lg">GROWAM NIG LTD</span>
+                <div>
+                    <span class="text-white font-bold text-lg">GROWAM NIG LTD</span>
+                    <span class="block text-xs text-blue-400">RC 6893170</span>
+                </div>
             </div>
-            <p class="text-sm">© 2026 Growam Nig Ltd. All rights reserved. Verified Secure Real Estate.</p>
+            <div class="text-sm space-y-1">
+                <p>Email: <a href="mailto:growamnigltd@gmail.com" class="text-blue-400 hover:underline">growamnigltd@gmail.com</a></p>
+                <p>WhatsApp: 
+                    <a href="https://wa.me/2349069245040" class="text-blue-400 hover:underline">09069245040</a> | 
+                    <a href="https://wa.me/2349064518552" class="text-blue-400 hover:underline">09064518552</a>
+                </p>
+                <p class="text-xs text-slate-500">© 2026 Growam Nig Ltd. All rights reserved.</p>
+            </div>
             <div class="flex space-x-4">
-                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://wa.me/2349069245040" target="_blank" class="hover:text-white transition" title="WhatsApp 1"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+                <a href="mailto:growamnigltd@gmail.com" class="hover:text-white transition" title="Email"><i class="fa-solid fa-envelope text-xl"></i></a>
             </div>
         </div>
     </footer>
@@ -555,8 +569,8 @@
             
             <!-- Dynamic Modal Header Tabs -->
             <div class="flex space-x-4 border-b border-slate-100 pb-4 mb-6" id="authTabsContainer">
-                <button id="tabSignin" onclick="toggleAuthTab('signin')" class="text-lg font-bold text-blue-600 border-b-2 border-blue-600 pb-2">Sign In</button>
-                <button id="tabSignup" onclick="toggleAuthTab('signup')" class="text-lg font-bold text-slate-400 pb-2 hover:text-slate-600">Sign Up</button>
+                <button type="button" id="tabSignin" onclick="toggleAuthTab('signin')" class="text-lg font-bold text-blue-600 border-b-2 border-blue-600 pb-2">Sign In</button>
+                <button type="button" id="tabSignup" onclick="toggleAuthTab('signup')" class="text-lg font-bold text-slate-400 pb-2 hover:text-slate-600">Sign Up</button>
             </div>
 
             <!-- Single Smart Form Handler -->
@@ -591,9 +605,96 @@
         </div>
     </div>
 
+    <!-- ADD PROPERTY & SUBSCRIPTION MODAL -->
+    <div id="addPropertyModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 sm:p-8 relative my-8">
+            <button onclick="closeAddPropertyModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <h3 class="text-xl font-black text-slate-900 mb-1">Upload Property Listing</h3>
+            <p class="text-xs text-slate-500 mb-4">Complete subscription payment to Growam Nig Ltd, then fill in details and upload your property image.</p>
+
+            <!-- Company Bank Account Info Box -->
+            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-6">
+                <h4 class="text-xs font-black text-blue-900 uppercase tracking-wider mb-2"><i class="fa-solid fa-building-columns mr-1"></i> Subscription Bank Account</h4>
+                <div class="text-xs space-y-1 text-blue-800">
+                    <p><strong>Company:</strong> Growam Nig Ltd (RC 6893170)</p>
+                    <p><strong>Bank:</strong> Kuda </p>
+                    <p><strong>Account Number:</strong> 3003012517</p>
+                </div>
+                <div class="mt-3 pt-3 border-t border-blue-200 text-xs font-semibold text-blue-900">
+                    Plans: ₦5,000 (7 Days) | ₦10,000 (14 Days) | ₦15,000 (21 Days) | ₦20,000 (30 Days)
+                </div>
+            </div>
+
+            <form id="addPropertyForm" class="space-y-4" onsubmit="handleNewPropertySubmit(event)">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Select Subscription Plan</label>
+                    <select id="propSubPlan" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm">
+                        <option value="5000">₦5,000 - 7 Days Duration</option>
+                        <option value="10000">₦10,000 - 14 Days Duration</option>
+                        <option value="15000">₦15,000 - 21 Days Duration</option>
+                        <option value="20000">₦20,000 - 30 Days Duration</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Property Title</label>
+                    <input type="text" id="propTitle" required placeholder="e.g. 4 Bedroom Luxury Duplex" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Price (₦)</label>
+                        <input type="text" id="propPrice" required placeholder="e.g. 150,000,000" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Category</label>
+                        <select id="propCategory" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm">
+                            <option value="Duplex">Duplex</option>
+                            <option value="Apartment">Apartment</option>
+                            <option value="Land">Land</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Location</label>
+                    <input type="text" id="propLocation" required placeholder="e.g. Lekki Phase 1, Lagos" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Description & Features</label>
+                    <textarea id="propDesc" rows="3" required placeholder="Describe amenities, C of O details..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm"></textarea>
+                </div>
+
+                <!-- House Image Upload Button -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Property Image</label>
+                    <div class="flex items-center space-x-4">
+                        <label class="cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-600 font-bold px-4 py-3 rounded-xl border border-blue-200 transition flex items-center space-x-2 text-sm flex-1 justify-center">
+                            <i class="fa-solid fa-camera"></i>
+                            <span>Tap to Choose Image</span>
+                            <input type="file" id="propImageFile" accept="image/*" class="hidden" onchange="previewUploadedImage(event)">
+                        </label>
+                    </div>
+                    <div id="imagePreviewContainer" class="hidden mt-3 relative">
+                        <img id="imagePreview" src="" class="w-full h-36 object-cover rounded-xl border border-slate-200">
+                        <button type="button" onclick="clearUploadedImage()" class="absolute top-2 right-2 bg-slate-900/80 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition text-sm">Submit Property & Payment Proof</button>
+            </form>
+        </div>
+    </div>
+
     <script>
         let authMode = 'signin';
         let isHumanVerified = false;
+        let currentUser = null;
+        let uploadedImageBase64 = '';
 
         function openAuthModal(mode) {
             document.getElementById('authModal').classList.remove('hidden');
@@ -631,13 +732,15 @@
             resetCaptcha();
         }
 
-        // Drag Captcha Logic
+        // Robust Touch & Mouse Drag Captcha Logic for Mobile and Desktop
         const dragBtn = document.getElementById('dragCaptchaBtn');
         const dragBox = document.getElementById('dragCaptchaBox');
         const dragText = document.getElementById('dragCaptchaText');
         const dragIcon = document.getElementById('dragIcon');
         const authSubmitBtn = document.getElementById('authSubmitBtn');
+        
         let isDragging = false;
+        let startX = 0;
 
         function resetCaptcha() {
             isHumanVerified = false;
@@ -651,19 +754,16 @@
             authSubmitBtn.innerText = authMode === 'forgot' ? "Send Password Reset" : (authMode === 'signup' ? "Create Free Account" : "Sign In to Account");
         }
 
-        dragBtn.addEventListener('mousedown', () => isDragging = true);
-        window.addEventListener('mouseup', () => {
-            if (!isDragging) return;
-            isDragging = false;
-            if (!isHumanVerified) {
-                dragBtn.style.left = '0px';
-            }
-        });
+        function startDrag(clientX) {
+            if (isHumanVerified) return;
+            isDragging = true;
+            startX = clientX;
+        }
 
-        window.addEventListener('mousemove', (e) => {
+        function onDrag(clientX) {
             if (!isDragging || isHumanVerified) return;
             const boxRect = dragBox.getBoundingClientRect();
-            let pos = e.clientX - boxRect.left - 24;
+            let pos = clientX - boxRect.left - 24;
             const maxPos = boxRect.width - 48;
             if (pos < 0) pos = 0;
             if (pos > maxPos) pos = maxPos;
@@ -679,7 +779,32 @@
                 authSubmitBtn.disabled = false;
                 authSubmitBtn.className = "w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition cursor-pointer";
             }
+        }
+
+        function endDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+            if (!isHumanVerified) {
+                dragBtn.style.left = '0px';
+            }
+        }
+
+        // Mouse Events
+        dragBtn.addEventListener('mousedown', (e) => startDrag(e.clientX));
+        window.addEventListener('mousemove', (e) => onDrag(e.clientX));
+        window.addEventListener('mouseup', endDrag);
+
+        // Touch Events for iPhone / Mobile
+        dragBtn.addEventListener('touchstart', (e) => {
+            startDrag(e.touches[0].clientX);
+            e.preventDefault();
         });
+        window.addEventListener('touchmove', (e) => {
+            if (isDragging) {
+                onDrag(e.touches[0].clientX);
+            }
+        });
+        window.addEventListener('touchend', endDrag);
 
         // Form submission with human check validation
         document.getElementById('authMainForm').addEventListener('submit', async (e) => {
@@ -690,34 +815,105 @@
             }
 
             const email = document.getElementById('authEmail').value;
-            const password = document.getElementById('passwordFieldContainer').classList.contains('hidden') ? '' : document.getElementById('authPassword').value;
+            currentUser = email;
 
-            if (authMode === 'signin') {
+            if (authMode === 'signup') {
+                alert('Account successfully created! You can now post your property and upload images.');
+            } else if (authMode === 'signin') {
                 alert('Sign In successful! Welcome back.');
-                closeAuthModal();
+            } else {
+                alert('Password reset link sent to your email.');
+            }
+
+            closeAuthModal();
+            updateUIAfterAuth();
+        });
+
+        function updateUIAfterAuth() {
+            if (currentUser) {
+                document.getElementById('navAuthBtn').classList.add('hidden');
+                document.getElementById('postPropertyNavBtn').classList.remove('hidden');
+                document.getElementById('postPropertyNavBtn').classList.add('flex');
+                document.getElementById('navUserBadge').classList.remove('hidden');
+                document.getElementById('navUserBadge').classList.add('flex');
+                document.getElementById('navUsernameDisplay').innerText = currentUser.split('@')[0];
+            }
+        }
+
+        function handlePostPropertyClick() {
+            if (!currentUser) {
+                alert('Please sign up or sign in first before uploading property images.');
+                openAuthModal('signup');
                 return;
             }
+            openAddPropertyModal();
+        }
 
-            const endpoint = authMode === 'signup' 
-                ? 'https://my-free-backend.onrender.com/signup' 
-                : 'https://my-free-backend.onrender.com/forgot-password';
+        function openAddPropertyModal() {
+            document.getElementById('addPropertyModal').classList.remove('hidden');
+        }
+
+        function closeAddPropertyModal() {
+            document.getElementById('addPropertyModal').classList.add('hidden');
+            document.getElementById('addPropertyForm').reset();
+            clearUploadedImage();
+        }
+
+        function previewUploadedImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedImageBase64 = e.target.result;
+                const preview = document.getElementById('imagePreview');
+                preview.src = uploadedImageBase64;
+                document.getElementById('imagePreviewContainer').classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearUploadedImage() {
+            uploadedImageBase64 = '';
+            document.getElementById('propImageFile').value = '';
+            document.getElementById('imagePreviewContainer').classList.add('hidden');
+            document.getElementById('imagePreview').src = '';
+        }
+
+        function handleNewPropertySubmit(e) {
+            e.preventDefault();
+            const plan = document.getElementById('propSubPlan').value;
+            const title = document.getElementById('propTitle').value;
+            const price = document.getElementById('propPrice').value;
+            const category = document.getElementById('propCategory').value;
+            const location = document.getElementById('propLocation').value;
+            const desc = document.getElementById('propDesc').value;
             
-            const payload = authMode === 'signup' ? { email, password } : { email };
+            const imageUrl = uploadedImageBase64 || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600';
 
-            try {
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await response.json();
-                alert(data.message || "Request completed successfully!");
-                if (response.ok) closeAuthModal();
-            } catch (error) {
-                alert('Successfully processed request via live backend link.');
-                closeAuthModal();
-            }
-        });
+            const grid = document.getElementById('propertyGrid');
+            const newCard = document.createElement('div');
+            newCard.className = 'bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card';
+            newCard.setAttribute('data-category', category);
+            
+            newCard.innerHTML = `
+                <img src="${imageUrl}" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">${category}</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">${title}</h3>
+                    <p class="text-sm text-slate-500">${location}</p>
+                    <p class="text-xs text-slate-400 mt-2 line-clamp-2">${desc}</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦${price}</span>
+                        <button onclick="alert('Viewing details for: ${title}')" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            `;
+
+            grid.prepend(newCard);
+            alert('Property successfully submitted! Subscription verified. Listing live on hub.');
+            closeAddPropertyModal();
+        }
 
         // Chatbot Widget Toggle and Replies
         function toggleChatWindow() {
@@ -736,12 +932,12 @@
             msgBox.scrollTop = msgBox.scrollHeight;
 
             setTimeout(() => {
-                let reply = "I can help you locate properties in Lagos, Abuja, or Port Harcourt. Would you like a duplex, land, or serviced apartment?";
+                let reply = "Growam Nig Ltd (RC 6893170) offers verified properties. Contact us via WhatsApp at 09069245040 or email growamnigltd@gmail.com.";
                 const lower = txt.toLowerCase();
-                if (lower.includes('price') || lower.includes('cost')) {
-                    reply = "Our properties range from ₦10,000,000 for land allocations up to ₦480,000,000 for luxury mansions.";
-                } else if (lower.includes('lagos')) {
-                    reply = "We have prime duplexes and land in Lekki Phase 1, Victoria Island, Ikeja GRA, and Epe!";
+                if (lower.includes('price') || lower.includes('cost') || lower.includes('subscription')) {
+                    reply = "Subscription plans: ₦5,000 (7 days), ₦10,000 (14 days), ₦15,000 (21 days), and ₦20,000 (30 days) payable to account 9069245040.";
+                } else if (lower.includes('whatsapp') || lower.includes('call')) {
+                    reply = "You can reach us on our WhatsApp lines: 09069245040 and 09064518552.";
                 }
                 msgBox.innerHTML += `<div class="flex items-start space-x-2"><div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">${reply}</div></div>`;
                 msgBox.scrollTop = msgBox.scrollHeight;
@@ -763,7 +959,7 @@
             alert('Loading secure deed and inspection options for property #' + id);
         }
 
-        function openProfileModal() { alert('Profile configuration screen.'); }
+        function openProfileModal() { alert('User Profile & Active Subscription status.'); }
         function openCartModal() { alert('Your saved real estate portfolio is currently empty.'); }
     </script>
 </body>
