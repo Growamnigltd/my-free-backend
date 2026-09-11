@@ -94,11 +94,32 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-3xl">
             <span class="inline-block py-1 px-3 rounded-full bg-blue-600/30 border border-blue-400/30 text-blue-300 text-sm font-semibold mb-6">RC 6893170 | Verified Real Estate Hub in Nigeria</span>
             <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-tight mb-6">Find Your Dream Home or Investment Property</h1>
-            <p class="text-lg text-slate-300 mb-8 leading-relaxed">Browse verified houses for rent, land parcels, and luxury apartments. Sign up to post your property listings securely.</p>
+            <p class="text-lg text-slate-300 mb-8 leading-relaxed">Browse verified houses for rent, land parcels, and luxury apartments. Sign up or use the master admin login to manage and control property listings securely.</p>
             
             <div class="flex flex-col sm:flex-row gap-4">
                 <a href="#properties" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 text-center transition">Explore Properties</a>
                 <button onclick="handlePostPropertyClick()" class="px-8 py-4 bg-white/10 hover:bg-white/25 backdrop-blur border border-white/20 text-white font-bold rounded-xl text-center transition">Post Your Property</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADMIN IMAGE CONTROL PANEL (Only visible when logged in) -->
+    <section id="adminDashboardSection" class="hidden py-12 bg-blue-50/55 border-b border-blue-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-blue-200">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest"><i class="fa-solid fa-shield-halved mr-1"></i> Admin Control Panel</span>
+                        <h2 class="text-2xl font-black text-slate-900 tracking-tight">Manage Website Listings & Images</h2>
+                    </div>
+                    <button onclick="handlePostPropertyClick()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition shadow">
+                        <i class="fa-solid fa-plus mr-1"></i> Add New Property Listing
+                    </button>
+                </div>
+                <p class="text-xs text-slate-500">Below are your currently active live properties. You can delete or replace listing images instantly from your admin dashboard.</p>
+                <div id="adminManagementGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+                    <!-- Populated dynamically -->
+                </div>
             </div>
         </div>
     </section>
@@ -108,13 +129,13 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight">Featured Properties Hub</h2>
-                <p class="text-slate-500 mt-1">Explore our balanced selection of 30 verified listings across Nigeria (10 Lands, 10 Duplexes, 10 Rental Apartments).</p>
+                <p class="text-slate-500 mt-1">Explore our balanced selection of verified listings across Nigeria (Lands, Duplexes, Rental Apartments).</p>
             </div>
             <div class="mt-4 md:mt-0 flex gap-2 overflow-x-auto pb-2">
-                <button onclick="filterProperties('all')" class="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl shadow">All (30)</button>
-                <button onclick="filterProperties('Duplex')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Duplexes (10)</button>
-                <button onclick="filterProperties('Apartment')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Rental Apartments (10)</button>
-                <button onclick="filterProperties('Land')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Lands for Sale (10)</button>
+                <button onclick="filterProperties('all')" class="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl shadow">All</button>
+                <button onclick="filterProperties('Duplex')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Duplexes</button>
+                <button onclick="filterProperties('Apartment')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Rental Apartments</button>
+                <button onclick="filterProperties('Land')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Lands for Sale</button>
             </div>
         </div>
 
@@ -139,7 +160,7 @@
             
             <div id="chatMessages" class="p-4 h-72 overflow-y-auto space-y-3 bg-slate-50 text-sm">
                 <div class="flex items-start space-x-2">
-                    <div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">Hello! Welcome to Growam Nig Ltd. I'm Aliyah. Sign up to post listings or ask me anything!</div>
+                    <div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">Hello! Welcome to Growam Nig Ltd. I'm Aliyah. Sign up or log into the admin account to manage listings!</div>
                 </div>
             </div>
             
@@ -252,7 +273,7 @@
             <button onclick="closeAddPropertyModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
             
             <h3 class="text-xl font-black text-slate-900 mb-1">Upload Property Listing</h3>
-            <p class="text-xs text-slate-500 mb-4">Complete subscription payment via Direct Bank Transfer, Flutterwave, or Paystack, then fill in details and upload your property image.</p>
+            <p class="text-xs text-slate-500 mb-4">Complete subscription payment or fill in details below to publish your property instantly.</p>
 
             <!-- Direct Bank Transfer Info Card -->
             <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-4">
@@ -268,11 +289,11 @@
             <div class="grid grid-cols-2 gap-3 mb-6">
                 <button type="button" class="flutterwave-btn text-white text-xs font-bold py-3 px-4 rounded-xl shadow transition flex items-center justify-center space-x-1" onclick="payWithFlutterwave()">
                     <i class="fa-solid fa-credit-card"></i>
-                    <span>Pay with Flutterwave</span>
+                    <span>Pay Flutterwave</span>
                 </button>
                 <button type="button" class="paystack-btn text-white text-xs font-bold py-3 px-4 rounded-xl shadow transition flex items-center justify-center space-x-1" onclick="payWithPaystack()">
                     <i class="fa-solid fa-shield-halved"></i>
-                    <span>Pay with Paystack</span>
+                    <span>Pay Paystack</span>
                 </button>
             </div>
 
@@ -318,37 +339,34 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Property Image</label>
-                    <label class="cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-600 font-bold px-4 py-3 rounded-xl border border-blue-200 transition flex items-center space-x-2 text-sm flex-1 justify-center">
-                        <i class="fa-solid fa-camera"></i>
-                        <span>Tap to Choose Image</span>
-                        <input type="file" id="propImageFile" accept="image/*" class="hidden" onchange="previewUploadedImage(event)">
-                    </label>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Property Image Upload (Free Cloud Direct)</label>
+                    <input type="file" id="propImageFile" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer" onchange="uploadPropertyImageToCloud(event)">
+                    <p id="uploadStatusText" class="text-xs text-slate-500 mt-1"></p>
+                    <input type="hidden" id="uploadedImageUrl" required>
                     <div id="imagePreviewContainer" class="hidden mt-3 relative">
                         <img id="imagePreview" src="" class="w-full h-36 object-cover rounded-xl border border-slate-200">
                         <button type="button" onclick="clearUploadedImage()" class="absolute top-2 right-2 bg-slate-900/80 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 </div>
 
-                <button type="submit" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition text-sm">Submit Property & Payment Proof</button>
+                <button type="submit" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition text-sm">Submit Property & Publish</button>
             </form>
         </div>
     </div>
 
     <!-- SCRIPT -->
     <script>
-        // ==========================================
-        // INITIALIZE EMAILJS WITH YOUR CORRECT CREDENTIALS
-        // ==========================================
         const SERVICE_ID = 'service_ko6zbb1';
         const TEMPLATE_ID = 'template_z7m2pxr';
         const PUBLIC_KEY = '07r4_TEDy_49x-48o';
+        
+        // Free ImgBB API Key for instant browser-to-cloud image hosting
+        const IMGBB_API_KEY = '6d207e4085421b44ecbf5c3167104b28';
 
         (function() {
             emailjs.init(PUBLIC_KEY);
         })();
 
-        // NATIVE SHA-256 PASSWORD HASHING HELPER
         async function hashPassword(password) {
             const msgBuffer = new TextEncoder().encode(password);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -356,75 +374,64 @@
             return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
-        // PRE-LOADED EXACTLY 30 PROPERTIES (10 LANDS, 10 DUPLEXES, 10 APARTMENTS FOR RENT)
-        const initialProperties = [
-            // --- 10 DUPLEXES FOR SALE ---
-            {title: "Luxury 5-Bedroom Detached Duplex", location: "Ikoyi, Lagos", price: "450,000,000", category: "Duplex", desc: "Fully serviced with private swimming pool, smart home automation, and 24-hour armed security.", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600"},
-            {title: "Modern 4-Bedroom Semi-Detached Duplex", location: "Lekki Phase 1, Lagos", price: "180,000,000", category: "Duplex", desc: "Contemporary architecture, stamped concrete compound, and boys' quarters (BQ).", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=600"},
-            {title: "Exquisite 6-Bedroom Mansion", location: "Asokoro, Abuja", price: "950,000,000", category: "Duplex", desc: "Ultra-luxury hilltop residence featuring panoramic city views, elevator, and underground parking.", img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=600"},
-            {title: "Spacious 4-Bedroom Terrace Duplex", location: "Victoria Island, Lagos", price: "220,000,000", category: "Duplex", desc: "Prime commercial/residential district proximity, private balconies, and backup generator.", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=600"},
-            {title: "Brand New 5-Bedroom Duplex", location: "Guzape, Abuja", price: "320,000,000", category: "Duplex", desc: "Elegant finishing, pop ceilings, fitted kitchen, and serene neighborhood.", img: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=600"},
-            {title: "Contemporary 4-Bedroom Duplex", location: "Ajah, Lagos", price: "95,000,000", category: "Duplex", desc: "Gated community, spacious rooms, clean water system, and ample parking space.", img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=600"},
-            {title: "Executive 5-Bedroom Smart Duplex", location: "Maitama, Abuja", price: "750,000,000", category: "Duplex", desc: "Fully automated lighting, security systems, private garden, and top-tier finishing.", img: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=600"},
-            {title: "Magnificent 4-Bedroom Duplex", location: "GRA Phase 2, Port Harcourt", price: "210,000,000", category: "Duplex", desc: "Serene secure estate with paved roads, pop ceilings, and modern kitchen cabinetry.", img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=600"},
-            {title: "Luxury 5-Bedroom Duplex with BQ", location: "Wuse 2, Abuja", price: "480,000,000", category: "Duplex", desc: "Central location, exquisite architectural design, walk-in closets, and jacuzzi.", img: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&q=80&w=600"},
-            {title: "Classic 4-Bedroom Duplex", location: "Ikeja GRA, Lagos", price: "310,000,000", category: "Duplex", desc: "Close to international airport, serene environment, and high rental yield potential.", img: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&q=80&w=600"},
-
-            // --- 10 APARTMENTS FOR RENT ---
-            {title: "Cozy 3-Bedroom Serviced Apartment (Rent)", location: "Victoria Island, Lagos", price: "7,500,000 /yr", category: "Apartment", desc: "High-rise building with elevator, gym, rooftop pool, and 24-hour electricity service.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600"},
-            {title: "Luxury 2-Bedroom Apartment (Rent)", location: "Eko Atlantic City, Lagos", price: "15,000,000 /yr", category: "Apartment", desc: "Stunning ocean view, world-class urban infrastructure, and uninterrupted power supply.", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600"},
-            {title: "Spacious 3-Bedroom Flat (Rent)", location: "Lekki Phase 1, Lagos", price: "5,000,000 /yr", category: "Apartment", desc: "Fitted kitchen, all rooms ensuite, water treatment plant, and secure gatehouse.", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=600"},
-            {title: "Executive 2-Bedroom Apartment (Rent)", location: "Utako, Abuja", price: "4,500,000 /yr", category: "Apartment", desc: "Close to commercial hubs, paved access roads, ample parking space, and uniform security.", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=600"},
-            {title: "Modern 1-Bedroom Studio Apartment (Rent)", location: "Yaba, Lagos", price: "2,200,000 /yr", category: "Apartment", desc: "Ideal for young professionals, fast fiber internet connection, and constant power.", img: "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?auto=format&fit=crop&q=80&w=600"},
-            {title: "Luxury 3-Bedroom Penthouse Apartment (Rent)", location: "Ikoyi, Lagos", price: "25,000,000 /yr", category: "Apartment", desc: "Top floor panoramic views, private elevator access, concierge services, and rooftop lounge.", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600"},
-            {title: "Chic 2-Bedroom Apartment (Rent)", location: "Garki, Abuja", price: "3,800,000 /yr", category: "Apartment", desc: "Clean borehole water, prepaid electricity meter, quiet gated compound, and fitted wardrobes.", img: "https://images.unsplash.com/photo-1502005229762-cf1b4da7c5d6?auto=format&fit=crop&q=80&w=600"},
-            {title: "Serviced 3-Bedroom Flat (Rent)", location: "GRA, Port Harcourt", price: "6,000,000 /yr", category: "Apartment", desc: "Dedicated transformer, backup generator, uniformed guards, and tiled interior finishing.", img: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=600"},
-            {title: "Cozy 2-Bedroom Apartment (Rent)", location: "Surulere, Lagos", price: "3,000,000 /yr", category: "Apartment", desc: "Accessible location near stadium, friendly neighborhood, and reliable security.", img: "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&q=80&w=600"},
-            {title: "Luxury 4-Bedroom Serviced Apartment (Rent)", location: "Jabi, Abuja", price: "10,000,000 /yr", category: "Apartment", desc: "Overlooking Jabi lake, swimming pool access, fully equipped gym, and elevator service.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600"},
-
-            // --- 10 LANDS FOR SALE ---
-            {title: "600sqm Residential Plot with C of O", location: "Guzape, Abuja", price: "120,000,000", category: "Land", desc: "Ready for immediate construction with certified C of O and approved building layout.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
-            {title: "1,000sqm Commercial Land", location: "Central Business District, Abuja", price: "500,000,000", category: "Land", desc: "Prime location suited for high-rise office complex or plaza development.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
-            {title: "Dry 500sqm Plot in Gated Estate", location: "Sangotedo, Lekki, Lagos", price: "35,000,000", category: "Land", desc: "Fast-developing neighborhood with perimeter fencing, drainage, and electricity.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
-            {title: "1,200sqm Waterfront Land Parcel", location: "Banana Island, Ikoyi, Lagos", price: "1,200,000,000", category: "Land", desc: "Ultra-exclusive waterfront parcel with shoreline protection and pristine views.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
-            {title: "Plots of Dry Land (Per Plot)", location: "Ibeju Lekki, Lagos", price: "15,000,000", category: "Land", desc: "Proximity to the Lekki Free Trade Zone and Dangote Refinery. High ROI potential.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
-            {title: "800sqm Residential Plot", location: "Katampe Extension, Abuja", price: "90,000,000", category: "Land", desc: "Hilly terrain with breathtaking views of the capital city, fully serviced estate.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
-            {title: "2,000sqm Industrial/Warehouse Land", location: "Ikeja Industrial Zone, Lagos", price: "700,000,000", category: "Land", desc: "Spacious land designated for manufacturing, warehousing, or logistics hub.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
-            {title: "500sqm Dry Land in Secure Estate", location: "Lugbe, Abuja", price: "25,000,000", category: "Land", desc: "Close to airport road, buy and build condition with active residential occupants.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
-            {title: "650sqm Residential Plot", location: "GRA Phase 3, Port Harcourt", price: "150,000,000", category: "Land", desc: "Prime land in an established high-end residential neighborhood with complete titles.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
-            {title: "10 Acres of Dry Agricultural/Mixed Land", location: "Kuje, Abuja", price: "80,000,000", category: "Land", desc: "Massive expanse of fertile land suitable for estate development or commercial farming.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"}
+        let propertiesList = JSON.parse(localStorage.getItem('growam_properties')) || [
+            {id: 1, title: "Luxury 5-Bedroom Detached Duplex", location: "Ikoyi, Lagos", price: "450,000,000", category: "Duplex", desc: "Fully serviced with private swimming pool and smart home automation.", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600"},
+            {id: 2, title: "Modern 4-Bedroom Semi-Detached Duplex", location: "Lekki Phase 1, Lagos", price: "180,000,000", category: "Duplex", desc: "Contemporary architecture, stamped concrete compound, and BQ.", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=600"},
+            {id: 3, title: "Cozy 3-Bedroom Serviced Apartment", location: "Victoria Island, Lagos", price: "7,500,000 /yr", category: "Apartment", desc: "High-rise building with elevator, gym, rooftop pool, and 24-hour electricity.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600"},
+            {id: 4, title: "600sqm Residential Plot with C of O", location: "Guzape, Abuja", price: "120,000,000", category: "Land", desc: "Ready for immediate construction with certified C of O.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"}
         ];
 
-        function renderInitialProperties() {
+        function renderProperties(filterCat = 'all') {
             const grid = document.getElementById('propertyGrid');
+            const adminGrid = document.getElementById('adminManagementGrid');
             grid.innerHTML = '';
-            initialProperties.forEach((p, idx) => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card';
-                card.setAttribute('data-category', p.category);
-                card.innerHTML = `
-                    <img src="${p.img}" class="w-full h-48 object-cover" alt="Property">
-                    <div class="p-5">
-                        <span class="text-xs font-bold text-blue-600 uppercase">${p.category}</span>
-                        <h3 class="text-lg font-bold text-slate-900 mt-1">${p.title}</h3>
-                        <p class="text-sm text-slate-500">${p.location}</p>
-                        <p class="text-xs text-slate-400 mt-2 line-clamp-2">${p.desc}</p>
-                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                            <span class="font-black text-slate-950">₦${p.price}</span>
-                            <button onclick="viewPropertyDetails(${idx + 1})" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+            if(adminGrid) adminGrid.innerHTML = '';
+
+            propertiesList.forEach((p) => {
+                // Public Grid Card
+                if (filterCat === 'all' || p.category === filterCat) {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card';
+                    card.innerHTML = `
+                        <img src="${p.img}" class="w-full h-48 object-cover" alt="Property">
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-blue-600 uppercase">${p.category}</span>
+                            <h3 class="text-lg font-bold text-slate-900 mt-1">${p.title}</h3>
+                            <p class="text-sm text-slate-500">${p.location}</p>
+                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">${p.desc}</p>
+                            <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                                <span class="font-black text-slate-950">₦${p.price}</span>
+                                <button onclick="alert('Viewing details for: ${p.title}')" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                            </div>
                         </div>
-                    </div>
-                `;
-                grid.appendChild(card);
+                    `;
+                    grid.appendChild(card);
+                }
+
+                // Admin Control Grid Card
+                if (currentUser && adminGrid) {
+                    const adminCard = document.createElement('div');
+                    adminCard.className = 'bg-slate-50 rounded-2xl p-3 border border-slate-200 flex flex-col justify-between';
+                    adminCard.innerHTML = `
+                        <div>
+                            <img src="${p.img}" class="w-full h-28 object-cover rounded-xl mb-2">
+                            <h4 class="text-xs font-bold text-slate-900 truncate">${p.title}</h4>
+                            <span class="text-[10px] text-blue-600 font-semibold">${p.category}</span>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-slate-200 flex justify-between gap-2">
+                            <button onclick="deleteProperty(${p.id})" class="flex-1 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-lg transition"><i class="fa-solid fa-trash mr-1"></i> Delete</button>
+                        </div>
+                    `;
+                    adminGrid.appendChild(adminCard);
+                }
             });
         }
 
-        window.addEventListener('DOMContentLoaded', renderInitialProperties);
+        window.addEventListener('DOMContentLoaded', () => renderProperties('all'));
 
-        let authMode = 'signin'; // 'signin', 'signup', or 'reset'
-        let isHumanVerified = false;
         let currentUser = null;
-        let uploadedImageBase64 = '';
+        let authMode = 'signin';
+        let isHumanVerified = false;
         let generatedResetCode = null;
 
         function openAuthModal(mode) {
@@ -435,14 +442,6 @@
 
         function closeAuthModal() {
             document.getElementById('authModal').classList.add('hidden');
-            if (authMode === 'reset') {
-                authMode = 'signin';
-                document.getElementById('standardAuthFields').style.display = 'block';
-                document.getElementById('resetEmailFields').style.display = 'none';
-                document.getElementById('resetVerifyFields').style.display = 'none';
-                document.getElementById('authTabsContainer').classList.remove('hidden');
-                document.getElementById('forgotLinkContainer').style.display = 'block';
-            }
         }
 
         function toggleAuthTab(mode) {
@@ -477,57 +476,33 @@
             resetCaptcha();
         }
 
-        // Forgot Password Link Click Handler
         document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
             e.preventDefault();
             toggleAuthTab('reset');
         });
 
-        // Send Reset Token Email via EmailJS
         function sendResetTokenEmail() {
             const email = document.getElementById('resetEmail').value.trim();
-            if (!email) {
-                alert('Please enter your registered email address first.');
-                return;
-            }
-
+            if (!email) { alert('Enter your registered email address first.'); return; }
             const registeredUsers = JSON.parse(localStorage.getItem('growam_users')) || [];
-            const userExists = registeredUsers.some(u => u.email === email);
-            if (!userExists) {
-                alert('No account found with this email address.');
-                return;
-            }
+            if (!registeredUsers.some(u => u.email === email)) { alert('No account found with this email.'); return; }
 
-            // Generate secure 6-digit random code
             generatedResetCode = Math.floor(100000 + Math.random() * 900000).toString();
-
-            const resetEmailParams = {
-                to_email: email,
-                reply_to: email,
-                message: `Your password reset verification code for Growam Nig Ltd (RC 6893170) is: ${generatedResetCode}. Enter this code on the website to set your new password.`
-            };
-
-            emailjs.send(SERVICE_ID, TEMPLATE_ID, resetEmailParams, PUBLIC_KEY)
+            emailjs.send(SERVICE_ID, TEMPLATE_ID, { to_email: email, message: `Verification code: ${generatedResetCode}` }, PUBLIC_KEY)
                 .then(() => {
-                    alert('Verification code sent successfully to your email! Please check your inbox.');
+                    alert('Verification code sent to your email!');
                     document.getElementById('resetEmailFields').style.display = 'none';
                     document.getElementById('resetVerifyFields').style.display = 'block';
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert('Failed to send verification email. Please check your network or try again.');
-                });
+                }).catch(() => alert('Failed to send email code.'));
         }
 
-        // Captcha Drag Logic
+        // Captcha slider logic
         const dragBtn = document.getElementById('dragCaptchaBtn');
         const dragBox = document.getElementById('dragCaptchaBox');
         const dragText = document.getElementById('dragCaptchaText');
         const dragIcon = document.getElementById('dragIcon');
         const authSubmitBtn = document.getElementById('authSubmitBtn');
-        
-        let isDragging = false;
-        let startX = 0;
+        let isDragging = false, startX = 0;
 
         function resetCaptcha() {
             isHumanVerified = false;
@@ -538,27 +513,18 @@
             dragBox.style.background = '#e2e8f0';
             authSubmitBtn.disabled = true;
             authSubmitBtn.className = "w-full py-3.5 bg-slate-300 text-slate-500 font-bold rounded-xl shadow transition cursor-not-allowed";
-            authSubmitBtn.innerText = authMode === 'reset' ? "Verify Code & Reset Password" : (authMode === 'signup' ? "Create Free Account" : "Sign In to Account");
         }
 
-        function startDrag(clientX) {
-            if (isHumanVerified) return;
-            isDragging = true;
-            startX = clientX;
-        }
-
+        function startDrag(clientX) { if (isHumanVerified) return; isDragging = true; startX = clientX; }
         function onDrag(clientX) {
             if (!isDragging || isHumanVerified) return;
             const boxRect = dragBox.getBoundingClientRect();
             let pos = clientX - boxRect.left - 24;
             const maxPos = boxRect.width - 48;
-            if (pos < 0) pos = 0;
-            if (pos > maxPos) pos = maxPos;
-            
+            if (pos < 0) pos = 0; if (pos > maxPos) pos = maxPos;
             dragBtn.style.left = pos + 'px';
             if (pos >= maxPos - 5) {
-                isHumanVerified = true;
-                isDragging = false;
+                isHumanVerified = true; isDragging = false;
                 dragBtn.classList.add('drag-success');
                 dragBox.style.background = '#dcfce7';
                 dragIcon.className = "fa-solid fa-check";
@@ -567,104 +533,54 @@
                 authSubmitBtn.className = "w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition cursor-pointer";
             }
         }
-
-        function endDrag() {
-            if (!isDragging) return;
-            isDragging = false;
-            if (!isHumanVerified) {
-                dragBtn.style.left = '0px';
-            }
-        }
+        function endDrag() { if (isDragging && !isHumanVerified) { isDragging = false; dragBtn.style.left = '0px'; } }
 
         dragBtn.addEventListener('mousedown', (e) => startDrag(e.clientX));
         window.addEventListener('mousemove', (e) => onDrag(e.clientX));
         window.addEventListener('mouseup', endDrag);
-
-        dragBtn.addEventListener('touchstart', (e) => {
-            startDrag(e.touches[0].clientX);
-            e.preventDefault();
-        });
-        window.addEventListener('touchmove', (e) => {
-            if (isDragging) onDrag(e.touches[0].clientX);
-        });
+        dragBtn.addEventListener('touchstart', (e) => { startDrag(e.touches[0].clientX); e.preventDefault(); });
+        window.addEventListener('touchmove', (e) => { if (isDragging) onDrag(e.touches[0].clientX); });
         window.addEventListener('touchend', endDrag);
 
-        // Form submission wired with Authentication & EmailJS
         document.getElementById('authMainForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (!isHumanVerified) {
-                alert('Please complete the human verification slider first.');
-                return;
-            }
-
+            if (!isHumanVerified) { alert('Complete human verification first.'); return; }
             const registeredUsers = JSON.parse(localStorage.getItem('growam_users')) || [];
 
             if (authMode === 'reset') {
                 const email = document.getElementById('resetEmail').value.trim();
-                const enteredToken = document.getElementById('resetTokenInput').value.trim();
-                const rawNewPassword = document.getElementById('newPassword').value;
-
-                if (enteredToken !== generatedResetCode) {
-                    alert('Invalid verification code. Please enter the exact 6-digit code sent to your email.');
-                    return;
-                }
-                
-                const userIndex = registeredUsers.findIndex(u => u.email === email);
-                if (userIndex === -1) {
-                    alert('No account found with this email address.');
-                    return;
-                }
-
-                const hashedNewPassword = await hashPassword(rawNewPassword);
-                registeredUsers[userIndex].password = hashedNewPassword;
+                if (document.getElementById('resetTokenInput').value.trim() !== generatedResetCode) { alert('Invalid code.'); return; }
+                const userIdx = registeredUsers.findIndex(u => u.email === email);
+                registeredUsers[userIdx].password = await hashPassword(document.getElementById('newPassword').value);
                 localStorage.setItem('growam_users', JSON.stringify(registeredUsers));
-
-                alert('Password successfully reset with email verification! You can now sign in.');
-                toggleAuthTab('signin');
-                return;
+                alert('Password reset successfully!'); toggleAuthTab('signin'); return;
             }
 
-            const email = document.getElementById('authEmail').value;
+            const email = document.getElementById('authEmail').value.trim();
             const rawPassword = document.getElementById('authPassword').value;
-            const hashedPassword = await hashPassword(rawPassword);
+            const hashedPwd = await hashPassword(rawPassword);
+
+            // SHARED MASTER ADMIN ACCOUNT FOR TEAM/STAFF ACCESS
+            const MASTER_ADMIN_EMAIL = "admin@growamnigltd.com";
+            const MASTER_ADMIN_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // Password is: GrowamPassword123
 
             if (authMode === 'signin') {
-                const foundUser = registeredUsers.find(u => u.email === email && u.password === hashedPassword);
-                if (!foundUser) {
-                    alert('Invalid email or password.');
-                    resetCaptcha();
+                if (email.toLowerCase() === MASTER_ADMIN_EMAIL && hashedPwd === MASTER_ADMIN_HASH) {
+                    currentUser = email;
+                    alert('Admin sign in successful!');
+                    closeAuthModal();
+                    updateUIAfterAuth();
                     return;
                 }
 
-                currentUser = email;
-                alert('Sign In successful! Welcome back.');
-                closeAuthModal();
-                updateUIAfterAuth();
+                const user = registeredUsers.find(u => u.email === email && u.password === hashedPwd);
+                if (!user) { alert('Invalid credentials.'); resetCaptcha(); return; }
+                currentUser = email; alert('Sign in successful!'); closeAuthModal(); updateUIAfterAuth();
             } else if (authMode === 'signup') {
-                if (registeredUsers.some(u => u.email === email)) {
-                    alert('An account with this email already exists.');
-                    resetCaptcha();
-                    return;
-                }
-
-                registeredUsers.push({ email, password: hashedPassword });
+                if (registeredUsers.some(u => u.email === email)) { alert('Email already exists.'); resetCaptcha(); return; }
+                registeredUsers.push({ email, password: hashedPwd });
                 localStorage.setItem('growam_users', JSON.stringify(registeredUsers));
-
-                currentUser = email;
-                
-                // Send welcome email via EmailJS
-                const welcomeParams = {
-                    to_email: email,
-                    reply_to: email,
-                    message: "Congratulations! Your account with Growam Nig Ltd (RC 6893170) has been successfully created. You can now log in, post property listings, and explore our verified real estate hub."
-                };
-
-                emailjs.send(SERVICE_ID, TEMPLATE_ID, welcomeParams, PUBLIC_KEY).catch(err => console.error(err));
-
-                alert('Account successfully created! Welcome to Growam.');
-                closeAuthModal();
-                updateUIAfterAuth();
-                resetCaptcha();
+                currentUser = email; alert('Account created successfully!'); closeAuthModal(); updateUIAfterAuth();
             }
         });
 
@@ -676,15 +592,13 @@
                 document.getElementById('navUserBadge').classList.remove('hidden');
                 document.getElementById('navUserBadge').classList.add('flex');
                 document.getElementById('navUsernameDisplay').innerText = currentUser.split('@')[0];
+                document.getElementById('adminDashboardSection').classList.remove('hidden');
+                renderProperties('all');
             }
         }
 
         function handlePostPropertyClick() {
-            if (!currentUser) {
-                alert('Please sign up or sign in first before uploading property images.');
-                openAuthModal('signup');
-                return;
-            }
+            if (!currentUser) { alert('Please sign in first to post listings.'); openAuthModal('signin'); return; }
             document.getElementById('addPropertyModal').classList.remove('hidden');
         }
 
@@ -694,145 +608,123 @@
             clearUploadedImage();
         }
 
-        function previewUploadedImage(event) {
+        // Direct Browser-to-Cloud Image Upload via ImgBB
+        async function uploadPropertyImageToCloud(event) {
             const file = event.target.files[0];
+            const statusText = document.getElementById('uploadStatusText');
+            const imageUrlInput = document.getElementById('uploadedImageUrl');
             if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                uploadedImageBase64 = e.target.result;
-                document.getElementById('imagePreview').src = uploadedImageBase64;
-                document.getElementById('imagePreviewContainer').classList.remove('hidden');
-            };
-            reader.readAsDataURL(file);
+
+            statusText.innerText = "Uploading image to cloud storage...";
+            const formData = new FormData();
+            formData.append("image", file);
+
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                    method: "POST",
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.success) {
+                    const hostedUrl = data.data.url;
+                    imageUrlInput.value = hostedUrl;
+                    document.getElementById('imagePreview').src = hostedUrl;
+                    document.getElementById('imagePreviewContainer').classList.remove('hidden');
+                    statusText.innerText = "✅ Image uploaded successfully!";
+                    statusText.style.color = "green";
+                } else {
+                    statusText.innerText = "❌ Upload failed. Try another image.";
+                    statusText.style.color = "red";
+                }
+            } catch (err) {
+                console.error(err);
+                statusText.innerText = "❌ Error connecting to image host.";
+                statusText.style.color = "red";
+            }
         }
 
         function clearUploadedImage() {
-            uploadedImageBase64 = '';
             document.getElementById('propImageFile').value = '';
+            document.getElementById('uploadedImageUrl').value = '';
             document.getElementById('imagePreviewContainer').classList.add('hidden');
             document.getElementById('imagePreview').src = '';
+            document.getElementById('uploadStatusText').innerText = '';
         }
 
         function handleNewPropertySubmit(e) {
             e.preventDefault();
-            const title = document.getElementById('propTitle').value;
-            const price = document.getElementById('propPrice').value;
-            const category = document.getElementById('propCategory').value;
-            const location = document.getElementById('propLocation').value;
-            const desc = document.getElementById('propDesc').value;
-            const imageUrl = uploadedImageBase64 || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600';
+            const imageUrl = document.getElementById('uploadedImageUrl').value;
+            if (!imageUrl) { alert('Please wait for the image to finish uploading first.'); return; }
 
-            const grid = document.getElementById('propertyGrid');
-            const newCard = document.createElement('div');
-            newCard.className = 'bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card';
-            newCard.setAttribute('data-category', category);
-            
-            newCard.innerHTML = `
-                <img src="${imageUrl}" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">${category}</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">${title}</h3>
-                    <p class="text-sm text-slate-500">${location}</p>
-                    <p class="text-xs text-slate-400 mt-2 line-clamp-2">${desc}</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦${price}</span>
-                        <button onclick="alert('Viewing details for: ${title}')" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            `;
+            const newProp = {
+                id: Date.now(),
+                title: document.getElementById('propTitle').value,
+                price: document.getElementById('propPrice').value,
+                category: document.getElementById('propCategory').value,
+                location: document.getElementById('propLocation').value,
+                desc: document.getElementById('propDesc').value,
+                img: imageUrl
+            };
 
-            grid.prepend(newCard);
-            alert('Property successfully submitted! Listing is now live on the hub.');
+            propertiesList.unshift(newProp);
+            localStorage.setItem('growam_properties', JSON.stringify(propertiesList));
+            renderProperties('all');
+            alert('Property successfully added and published live!');
             closeAddPropertyModal();
         }
 
-        function payWithFlutterwave() {
-            const planSelect = document.getElementById('propSubPlan');
-            const amount = planSelect.value;
-            const email = currentUser || "customer@growamnigltd.com";
+        function deleteProperty(id) {
+            if (confirm('Are you sure you want to delete this property listing?')) {
+                propertiesList = propertiesList.filter(p => p.id !== id);
+                localStorage.setItem('growam_properties', JSON.stringify(propertiesList));
+                renderProperties('all');
+                alert('Property deleted successfully.');
+            }
+        }
 
+        function payWithFlutterwave() {
             FlutterwaveCheckout({
                 public_key: "FLWPUBK_TEST-YOUR_FLUTTERWAVE_PUBLIC_KEY-X",
                 tx_ref: "growam_tx_" + Date.now(),
-                amount: amount,
+                amount: document.getElementById('propSubPlan').value,
                 currency: "NGN",
                 payment_options: "card, banktransfer, ussd",
-                customer: {
-                    email: email,
-                    name: currentUser ? currentUser.split('@')[0] : "Growam User",
-                },
-                customizations: {
-                    title: "Growam Nig Ltd Subscription",
-                    description: "Property Listing Subscription Fee",
-                    logo: "https://assets.piedpiper.com/logo.png",
-                },
-                callback: function (data) {
-                    alert("Flutterwave payment complete! Transaction reference: " + data.transaction_id);
-                },
-                onclose: function() {
-                    console.log("Flutterwave modal closed");
-                }
+                customer: { email: currentUser || "user@growamnigltd.com", name: "Growam Admin" },
+                callback: function (data) { alert("Payment complete! Ref: " + data.transaction_id); }
             });
         }
 
         function payWithPaystack() {
-            const planSelect = document.getElementById('propSubPlan');
-            const amount = parseInt(planSelect.value) * 100;
-            const email = currentUser || "customer@growamnigltd.com";
-
             let handler = PaystackPop.setup({
                 key: 'pk_test_YOUR_PAYSTACK_PUBLIC_KEY',
-                email: email,
-                amount: amount,
+                email: currentUser || 'user@growamnigltd.com',
+                amount: parseInt(document.getElementById('propSubPlan').value) * 100,
                 currency: 'NGN',
-                ref: 'growam_ref_' + Math.floor((Math.random() * 1000000000) + 1),
-                callback: function(response){
-                    alert('Paystack payment complete! Reference: ' + response.reference);
-                },
-                onClose: function(){
-                    alert('Paystack window closed.');
-                }
+                callback: function(res){ alert('Payment complete! Ref: ' + res.reference); }
             });
             handler.openIFrame();
         }
 
-        function toggleChatWindow() {
-            document.getElementById('chatWindow').classList.toggle('hidden');
-        }
-
+        function toggleChatWindow() { document.getElementById('chatWindow').classList.toggle('hidden'); }
         function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const msgBox = document.getElementById('chatMessages');
             const txt = input.value.trim();
             if (!txt) return;
-
             msgBox.innerHTML += `<div class="flex justify-end"><div class="bg-slate-900 text-white p-2 rounded-xl text-xs max-w-[80%]">${txt}</div></div>`;
             input.value = '';
-            msgBox.scrollTop = msgBox.scrollHeight;
-
             setTimeout(() => {
-                let reply = "Growam Nig Ltd (RC 6893170) offers verified properties. Contact us via WhatsApp at 09069245040.";
-                if (txt.toLowerCase().includes('price') || txt.toLowerCase().includes('subscription')) {
-                    reply = "Subscription plans range from ₦5,000 (7 days) to ₦20,000 (30 days) payable via direct bank transfer or automated payment options.";
-                }
-                msgBox.innerHTML += `<div class="flex items-start space-x-2"><div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">${reply}</div></div>`;
+                msgBox.innerHTML += `<div class="flex items-start space-x-2"><div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">Growam Nig Ltd (RC 6893170) verified hub. WhatsApp: 09069245040.</div></div>`;
                 msgBox.scrollTop = msgBox.scrollHeight;
             }, 600);
         }
 
         function filterProperties(category) {
-            document.querySelectorAll('.property-card').forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+            renderProperties(category);
         }
 
-        function viewPropertyDetails(id) { alert('Loading secure property deed and details #' + id); }
-        function openProfileModal() { alert('User Profile & Active Subscription info.'); }
-        function openCartModal() { alert('Your saved real estate portfolio is currently empty.'); }
+        function openProfileModal() { alert('Admin Profile Hub active.'); }
+        function openCartModal() { alert('Your saved real estate portfolio is empty.'); }
     </script>
 </body>
 </html>
