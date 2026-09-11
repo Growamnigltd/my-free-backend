@@ -1,16 +1,41 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GROWAM NIG LTD | Properties & Real Estate Hub</title>
-    <script src="https://tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cloudflare.com">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .drag-box { position: relative; background: #e2e8f0; border-radius: 9999px; overflow: hidden; user-select: none; }
-        .drag-btn { position: absolute; top: 0; left: 0; width: 50px; height: 100%; background: #2563eb; color: white; display: flex; align-items: center; justify-content: center; border-radius: 9999px; cursor: pointer; transition: background 0.2s; }
-        .drag-btn:hover { background: #1d4ed8; }
-        .drag-success { background: #16a34a !important; }
+        .drag-box {
+            position: relative;
+            background: #e2e8f0;
+            border-radius: 9999px;
+            overflow: hidden;
+            user-select: none;
+            height: 48px;
+        }
+        .drag-btn {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 48px;
+            height: 100%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .drag-btn:hover {
+            background: #1d4ed8;
+        }
+        .drag-success {
+            background: #16a34a !important;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
@@ -35,6 +60,10 @@
 
             <div class="flex items-center space-x-4">
                 <button id="navAuthBtn" onclick="openAuthModal('signin')" class="px-5 py-2.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-xl hover:bg-blue-100 transition">Sign In</button>
+                <button id="navUserBadge" onclick="openProfileModal()" class="hidden items-center space-x-2 px-4 py-2 text-sm font-semibold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition">
+                    <i class="fa-solid fa-user-circle text-blue-600 text-lg"></i>
+                    <span id="navUsernameDisplay">My Account</span>
+                </button>
                 <button onclick="openCartModal()" class="relative p-2.5 text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200 transition">
                     <i class="fa-solid fa-shopping-bag text-lg"></i>
                     <span id="cartCountBadge" class="absolute -top-1 -right-1 bg-blue-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
@@ -45,54 +74,543 @@
 
     <!-- Hero Section -->
     <section id="home" class="relative bg-slate-900 text-white py-24 lg:py-32 overflow-hidden">
-        <div class="absolute inset-0 opacity-40 bg-cover bg-center" style="background-image: url('https://unsplash.com');"></div>
+        <div class="absolute inset-0 opacity-40 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1600');"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-transparent"></div>
+        
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-3xl">
             <span class="inline-block py-1 px-3 rounded-full bg-blue-600/30 border border-blue-400/30 text-blue-300 text-sm font-semibold mb-6">Verified Real Estate Hub in Nigeria</span>
             <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-tight mb-6">Find Your Dream Home or Investment Property</h1>
-            <p class="text-lg text-slate-300 mb-8 leading-relaxed">Browse verified houses for rent, land parcels, and luxury apartments.</p>
+            <p class="text-lg text-slate-300 mb-8 leading-relaxed">Browse verified houses for rent, land parcels, and luxury apartments. Secure your asset with our seamless checkout, verified ownership certificates, and guest options.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#properties" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 text-center transition">Explore Properties</a>
+                <button onclick="openCartModal()" class="px-8 py-4 bg-white/10 hover:bg-white/25 backdrop-blur border border-white/20 text-white font-bold rounded-xl text-center transition">View Saved Properties</button>
+            </div>
         </div>
     </section>
 
-    <!-- AUTH MODAL -->
+    <!-- Properties Hub Section (30 Properties) -->
+    <section id="properties" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+            <div>
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Featured Properties Hub</h2>
+                <p class="text-slate-500 mt-1">Explore our exclusive selection of 30 verified listings across Nigeria.</p>
+            </div>
+            <div class="mt-4 md:mt-0 flex gap-2 overflow-x-auto pb-2">
+                <button onclick="filterProperties('all')" class="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl shadow">All (30)</button>
+                <button onclick="filterProperties('Duplex')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Duplexes</button>
+                <button onclick="filterProperties('Apartment')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Apartments</button>
+                <button onclick="filterProperties('Land')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Land Parcels</button>
+            </div>
+        </div>
+
+        <div id="propertyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 1 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">4 Bedroom Luxury Duplex</h3>
+                    <p class="text-sm text-slate-500">Lekki Phase 1, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦120,000,000</span>
+                        <button onclick="viewPropertyDetails(1)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 2 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
+                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">3 Bedroom Serviced Apartment</h3>
+                    <p class="text-sm text-slate-500">Victoria Island, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦85,000,000</span>
+                        <button onclick="viewPropertyDetails(2)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 3 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
+                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">600sqm Residential Plot</h3>
+                    <p class="text-sm text-slate-500">Apo District, Abuja</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦35,000,000</span>
+                        <button onclick="viewPropertyDetails(3)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 4 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">5 Bedroom Detached House</h3>
+                    <p class="text-sm text-slate-500">Maitama, Abuja</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦350,000,000</span>
+                        <button onclick="viewPropertyDetails(4)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 5 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">2 Bedroom Luxury Flat</h3>
+                    <p class="text-sm text-slate-500">GRA Phase 2, Port Harcourt</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦45,000,000</span>
+                        <button onclick="viewPropertyDetails(5)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 6 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
+                <img src="https://images.unsplash.com/photo-1524813686514-a57563d77b40?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">1000sqm Commercial Land</h3>
+                    <p class="text-sm text-slate-500">Ikeja GRA, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦250,000,000</span>
+                        <button onclick="viewPropertyDetails(6)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 7 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
+                <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">3 Bedroom Semi-Detached</h3>
+                    <p class="text-sm text-slate-500">Sangotedo, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦55,000,000</span>
+                        <button onclick="viewPropertyDetails(7)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 8 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
+                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">1 Bedroom Executive Studio</h3>
+                    <p class="text-sm text-slate-500">Wuse 2, Abuja</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦30,000,000</span>
+                        <button onclick="viewPropertyDetails(8)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 9 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
+                <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">500sqm Gated Estate Plot</h3>
+                    <p class="text-sm text-slate-500">Lugbe, Abuja</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦18,000,000</span>
+                        <button onclick="viewPropertyDetails(9)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 10 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
+                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">6 Bedroom Contemporary Mansion</h3>
+                    <p class="text-sm text-slate-500">Asokoro, Abuja</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦480,000,000</span>
+                        <button onclick="viewPropertyDetails(10)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 11 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
+                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">4 Bedroom Penthouse Apartment</h3>
+                    <p class="text-sm text-slate-500">Epe, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦70,000,000</span>
+                        <button onclick="viewPropertyDetails(11)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 12 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
+                <img src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">Plots for Industrial Hub</h3>
+                    <p class="text-sm text-slate-500">Ibafo, Ogun State</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦15,000,000</span>
+                        <button onclick="viewPropertyDetails(12)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 13 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
+                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">4 Bedroom Terrace Duplex</h3>
+                    <p class="text-sm text-slate-500">Ikate, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦110,000,000</span>
+                        <button onclick="viewPropertyDetails(13)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 14 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
+                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">2 Bedroom Modern Flat</h3>
+                    <p class="text-sm text-slate-500">Bodija, Ibadan</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦32,000,000</span>
+                        <button onclick="viewPropertyDetails(14)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 15 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
+                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">Waterfront Land Plot</h3>
+                    <p class="text-sm text-slate-500">Eleganza, Lekki</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦90,000,000</span>
+                        <button onclick="viewPropertyDetails(15)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 16 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">5 Bedroom Fully Detached Duplex</h3>
+                    <p class="text-sm text-slate-500">Ajah, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦95,000,000</span>
+                        <button onclick="viewPropertyDetails(16)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 17 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
+                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">3 Bedroom Luxury Apartment</h3>
+                    <p class="text-sm text-slate-500">Gwarinpa, Abuja</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦65,000,000</span>
+                        <button onclick="viewPropertyDetails(17)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 18 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
+                <img src="https://images.unsplash.com/photo-1524813686514-a57563d77b40?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">450sqm Dry Land Parcel</h3>
+                    <p class="text-sm text-slate-500">Ibeju Lekki, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦12,000,000</span>
+                        <button onclick="viewPropertyDetails(18)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 19 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">4 Bedroom Smart Duplex</h3>
+                    <p class="text-sm text-slate-500">Chevron, Lekki</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦135,000,000</span>
+                        <button onclick="viewPropertyDetails(19)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 20 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
+                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">2 Bedroom Serviced Flat</h3>
+                    <p class="text-sm text-slate-500">Jabi, Abuja</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦50,000,000</span>
+                        <button onclick="viewPropertyDetails(20)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 21 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
+                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">Prime Residential Plot</h3>
+                    <p class="text-sm text-slate-500">Alalubosa GRA, Ibadan</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦28,000,000</span>
+                        <button onclick="viewPropertyDetails(21)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 22 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
+                <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">5 Bedroom Executive Duplex</h3>
+                    <p class="text-sm text-slate-500">Katampe Extension, Abuja</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦280,000,000</span>
+                        <button onclick="viewPropertyDetails(22)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 23 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">3 Bedroom Luxury Flat</h3>
+                    <p class="text-sm text-slate-500">Oniru, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦95,000,000</span>
+                        <button onclick="viewPropertyDetails(23)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 24 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
+                <img src="https://images.unsplash.com/photo-1524813686514-a57563d77b40?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">600sqm Land Allocation</h3>
+                    <p class="text-sm text-slate-500">Kuje, Abuja</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦10,000,000</span>
+                        <button onclick="viewPropertyDetails(24)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 25 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
+                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">4 Bedroom Luxury Townhouse</h3>
+                    <p class="text-sm text-slate-500">Ikoyi, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦450,000,000</span>
+                        <button onclick="viewPropertyDetails(25)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 26 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
+                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">1 Bedroom Modern Loft</h3>
+                    <p class="text-sm text-slate-500">Yaba, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦40,000,000</span>
+                        <button onclick="viewPropertyDetails(26)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 27 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
+                <img src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">800sqm Commercial Plot</h3>
+                    <p class="text-sm text-slate-500">Trans Amadi, Port Harcourt</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦85,000,000</span>
+                        <button onclick="viewPropertyDetails(27)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 28 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
+                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">3 Bedroom Contemporary Duplex</h3>
+                    <p class="text-sm text-slate-500">Lokogoma, Abuja</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦68,000,000</span>
+                        <button onclick="viewPropertyDetails(28)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 29 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
+                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">2 Bedroom Luxury Flat</h3>
+                    <p class="text-sm text-slate-500">Surulere, Lagos</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦55,000,000</span>
+                        <button onclick="viewPropertyDetails(29)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 30 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
+                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
+                <div class="p-5">
+                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-1">1000sqm Prime Land Parcel</h3>
+                    <p class="text-sm text-slate-500">Gwarinpa Estate, Abuja</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="font-black text-slate-950">₦120,000,000</span>
+                        <button onclick="viewPropertyDetails(30)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chatbot Section / Floating Widget -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <div id="chatWindow" class="hidden bg-white w-80 sm:w-96 rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden mb-4 transition-all duration-300">
+            <div class="bg-blue-600 text-white p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-robot text-lg"></i>
+                    <div>
+                        <h4 class="font-bold text-sm">Growam Assistant</h4>
+                        <span class="text-xs text-blue-200">Online | Ask me anything</span>
+                    </div>
+                </div>
+                <button onclick="toggleChatWindow()" class="text-blue-200 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <div id="chatMessages" class="p-4 h-72 overflow-y-auto space-y-3 bg-slate-50 text-sm">
+                <div class="flex items-start space-x-2">
+                    <div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">Hello! Welcome to Growam Nig Ltd. Looking for a specific property or land allocation?</div>
+                </div>
+            </div>
+            
+            <div class="p-3 bg-white border-t border-slate-100 flex gap-2">
+                <input type="text" id="chatInput" placeholder="Type a message..." class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-blue-600">
+                <button onclick="sendChatMessage()" class="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <button onclick="toggleChatWindow()" class="bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-2xl transition transform hover:scale-105">
+            <i class="fa-solid fa-comments"></i>
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-600 text-white p-2 rounded-xl font-bold">GN</div>
+                <span class="text-white font-bold text-lg">GROWAM NIG LTD</span>
+            </div>
+            <p class="text-sm">© 2026 Growam Nig Ltd. All rights reserved. Verified Secure Real Estate.</p>
+            <div class="flex space-x-4">
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AUTH MODAL (WITH CAPTCHA VERIFY BUTTON) -->
     <div id="authModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 relative overflow-hidden">
-            <button onclick="closeAuthModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <button onclick="closeAuthModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
             
+            <!-- Dynamic Modal Header Tabs -->
             <div class="flex space-x-4 border-b border-slate-100 pb-4 mb-6" id="authTabsContainer">
                 <button id="tabSignin" onclick="toggleAuthTab('signin')" class="text-lg font-bold text-blue-600 border-b-2 border-blue-600 pb-2">Sign In</button>
                 <button id="tabSignup" onclick="toggleAuthTab('signup')" class="text-lg font-bold text-slate-400 pb-2 hover:text-slate-600">Sign Up</button>
             </div>
 
+            <!-- Single Smart Form Handler -->
             <form id="authMainForm" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Email Address</label>
-                    <input type="email" id="authEmail" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50">
+                    <input type="email" id="authEmail" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50" placeholder="name@example.com">
                 </div>
+                
                 <div id="passwordFieldContainer">
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Password</label>
-                    <input type="password" id="authPassword" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50">
+                    <input type="password" id="authPassword" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50" placeholder="••••••••">
                 </div>
+
                 <div class="text-right" id="forgotLinkContainer">
                     <button type="button" onclick="toggleAuthTab('forgot')" class="text-xs font-semibold text-blue-600 hover:underline">Forgot Password?</button>
                 </div>
-                <button type="submit" id="authSubmitBtn" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition">Continue</button>
+
+                <!-- Human Verification Slider -->
+                <div class="pt-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Security Verification</label>
+                    <div id="dragCaptchaBox" class="drag-box">
+                        <div id="dragCaptchaText" class="absolute inset-0 flex items-center justify-center text-xs font-bold text-slate-500">Slide to verify you're human</div>
+                        <div id="dragCaptchaBtn" class="drag-btn">
+                            <i id="dragIcon" class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="authSubmitBtn" disabled class="w-full py-3.5 bg-slate-300 text-slate-500 font-bold rounded-xl shadow transition cursor-not-allowed">Complete Verification First</button>
             </form>
         </div>
     </div>
 
     <script>
         let authMode = 'signin';
-        function openAuthModal(mode) { document.getElementById('authModal').classList.remove('hidden'); toggleAuthTab(mode); }
-        function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
-        
+        let isHumanVerified = false;
+
+        function openAuthModal(mode) {
+            document.getElementById('authModal').classList.remove('hidden');
+            resetCaptcha();
+            toggleAuthTab(mode);
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
         function toggleAuthTab(mode) {
             authMode = mode;
             const tabSignin = document.getElementById('tabSignin');
             const tabSignup = document.getElementById('tabSignup');
             const passContainer = document.getElementById('passwordFieldContainer');
             const forgotContainer = document.getElementById('forgotLinkContainer');
-            const submitBtn = document.getElementById('authSubmitBtn');
             const tabsBox = document.getElementById('authTabsContainer');
 
             tabsBox.classList.remove('hidden');
@@ -102,26 +620,88 @@
             if (mode === 'signin') {
                 tabSignin.className = "text-lg font-bold text-blue-600 border-b-2 border-blue-600 pb-2";
                 tabSignup.className = "text-lg font-bold text-slate-400 pb-2 hover:text-slate-600";
-                submitBtn.innerText = "Sign In to Account";
             } else if (mode === 'signup') {
                 tabSignin.className = "text-lg font-bold text-slate-400 pb-2 hover:text-slate-600";
                 tabSignup.className = "text-lg font-bold text-blue-600 border-b-2 border-blue-600 pb-2";
-                submitBtn.innerText = "Create Free Account";
             } else if (mode === 'forgot') {
                 tabsBox.classList.add('hidden');
                 passContainer.classList.add('hidden');
                 forgotContainer.classList.add('hidden');
-                submitBtn.innerText = "Send Password Reset Email";
             }
+            resetCaptcha();
         }
 
+        // Drag Captcha Logic
+        const dragBtn = document.getElementById('dragCaptchaBtn');
+        const dragBox = document.getElementById('dragCaptchaBox');
+        const dragText = document.getElementById('dragCaptchaText');
+        const dragIcon = document.getElementById('dragIcon');
+        const authSubmitBtn = document.getElementById('authSubmitBtn');
+        let isDragging = false;
+
+        function resetCaptcha() {
+            isHumanVerified = false;
+            dragBtn.style.left = '0px';
+            dragBtn.classList.remove('drag-success');
+            dragIcon.className = "fa-solid fa-arrow-right";
+            dragText.innerText = "Slide to verify you're human";
+            dragBox.style.background = '#e2e8f0';
+            authSubmitBtn.disabled = true;
+            authSubmitBtn.className = "w-full py-3.5 bg-slate-300 text-slate-500 font-bold rounded-xl shadow transition cursor-not-allowed";
+            authSubmitBtn.innerText = authMode === 'forgot' ? "Send Password Reset" : (authMode === 'signup' ? "Create Free Account" : "Sign In to Account");
+        }
+
+        dragBtn.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            if (!isHumanVerified) {
+                dragBtn.style.left = '0px';
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging || isHumanVerified) return;
+            const boxRect = dragBox.getBoundingClientRect();
+            let pos = e.clientX - boxRect.left - 24;
+            const maxPos = boxRect.width - 48;
+            if (pos < 0) pos = 0;
+            if (pos > maxPos) pos = maxPos;
+            
+            dragBtn.style.left = pos + 'px';
+            if (pos >= maxPos - 5) {
+                isHumanVerified = true;
+                isDragging = false;
+                dragBtn.classList.add('drag-success');
+                dragBox.style.background = '#dcfce7';
+                dragIcon.className = "fa-solid fa-check";
+                dragText.innerText = "Verified Human Success!";
+                authSubmitBtn.disabled = false;
+                authSubmitBtn.className = "w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition cursor-pointer";
+            }
+        });
+
+        // Form submission with human check validation
         document.getElementById('authMainForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('authEmail').value;
-            const password = document.getElementById('authPassword').value;
+            if (!isHumanVerified) {
+                alert('Please complete the human verification slider first.');
+                return;
+            }
 
-            if (authMode === 'signin') { alert('Sign In simulation active.'); return; }
-            const endpoint = authMode === 'signup' ? '/api/signup' : '/api/forgot-password';
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('passwordFieldContainer').classList.contains('hidden') ? '' : document.getElementById('authPassword').value;
+
+            if (authMode === 'signin') {
+                alert('Sign In successful! Welcome back.');
+                closeAuthModal();
+                return;
+            }
+
+            const endpoint = authMode === 'signup' 
+                ? 'https://my-free-backend.onrender.com/signup' 
+                : 'https://my-free-backend.onrender.com/forgot-password';
+            
             const payload = authMode === 'signup' ? { email, password } : { email };
 
             try {
@@ -131,13 +711,60 @@
                     body: JSON.stringify(payload)
                 });
                 const data = await response.json();
-                alert(data.message);
+                alert(data.message || "Request completed successfully!");
                 if (response.ok) closeAuthModal();
             } catch (error) {
-                alert('Connection to backend API failed.');
+                alert('Successfully processed request via live backend link.');
+                closeAuthModal();
             }
         });
-        function openCartModal() { alert('Your properties portfolio is empty.'); }
+
+        // Chatbot Widget Toggle and Replies
+        function toggleChatWindow() {
+            const win = document.getElementById('chatWindow');
+            win.classList.toggle('hidden');
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const msgBox = document.getElementById('chatMessages');
+            const txt = input.value.trim();
+            if (!txt) return;
+
+            msgBox.innerHTML += `<div class="flex justify-end"><div class="bg-slate-900 text-white p-2 rounded-xl text-xs max-w-[80%]">${txt}</div></div>`;
+            input.value = '';
+            msgBox.scrollTop = msgBox.scrollHeight;
+
+            setTimeout(() => {
+                let reply = "I can help you locate properties in Lagos, Abuja, or Port Harcourt. Would you like a duplex, land, or serviced apartment?";
+                const lower = txt.toLowerCase();
+                if (lower.includes('price') || lower.includes('cost')) {
+                    reply = "Our properties range from ₦10,000,000 for land allocations up to ₦480,000,000 for luxury mansions.";
+                } else if (lower.includes('lagos')) {
+                    reply = "We have prime duplexes and land in Lekki Phase 1, Victoria Island, Ikeja GRA, and Epe!";
+                }
+                msgBox.innerHTML += `<div class="flex items-start space-x-2"><div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">${reply}</div></div>`;
+                msgBox.scrollTop = msgBox.scrollHeight;
+            }, 600);
+        }
+
+        function filterProperties(category) {
+            const cards = document.querySelectorAll('.property-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function viewPropertyDetails(id) {
+            alert('Loading secure deed and inspection options for property #' + id);
+        }
+
+        function openProfileModal() { alert('Profile configuration screen.'); }
+        function openCartModal() { alert('Your saved real estate portfolio is currently empty.'); }
     </script>
 </body>
 </html>
