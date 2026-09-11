@@ -6,8 +6,12 @@
     <title>GROWAM NIG LTD | Properties & Real Estate Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- EmailJS SDK Script -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- EmailJS SDK Script (Updated to v4 as requested previously) -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- Include Flutterwave inline script -->
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <!-- Include Paystack inline script -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
     <style>
         .drag-box {
             position: relative;
@@ -40,6 +44,8 @@
         .drag-success {
             background: #16a34a !important;
         }
+        .paystack-btn { background-color: #00c853 !important; }
+        .flutterwave-btn { background-color: #f5a623 !important; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
@@ -222,15 +228,28 @@
             <button onclick="closeAddPropertyModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
             
             <h3 class="text-xl font-black text-slate-900 mb-1">Upload Property Listing</h3>
-            <p class="text-xs text-slate-500 mb-4">Complete subscription payment to Growam Nig Ltd, then fill in details and upload your property image.</p>
+            <p class="text-xs text-slate-500 mb-4">Complete subscription payment via Direct Bank Transfer, Flutterwave, or Paystack, then fill in details and upload your property image.</p>
 
-            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-6">
-                <h4 class="text-xs font-black text-blue-900 uppercase tracking-wider mb-2"><i class="fa-solid fa-building-columns mr-1"></i> Subscription Bank Account</h4>
+            <!-- Direct Bank Transfer Info Card -->
+            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-4">
+                <h4 class="text-xs font-black text-blue-900 uppercase tracking-wider mb-2"><i class="fa-solid fa-building-columns mr-1"></i> Direct Bank Transfer Account</h4>
                 <div class="text-xs space-y-1 text-blue-800">
                     <p><strong>Company:</strong> Growam Nig Ltd (RC 6893170)</p>
-                    <p><strong>Bank:</strong> kuda mfb </p>
-                    <p><strong>Account Number:</strong> 3003012517</p>
+                    <p><strong>Bank:</strong> OPay / Moniepoint</p>
+                    <p><strong>Account Number:</strong> 9069245040</p>
                 </div>
+            </div>
+
+            <!-- Integrated Automated Payment Gateways Options -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <button type="button" class="flutterwave-btn text-white text-xs font-bold py-3 px-4 rounded-xl shadow transition flex items-center justify-center space-x-1" onclick="payWithFlutterwave()">
+                    <i class="fa-solid fa-credit-card"></i>
+                    <span>Pay with Flutterwave</span>
+                </button>
+                <button type="button" class="paystack-btn text-white text-xs font-bold py-3 px-4 rounded-xl shadow transition flex items-center justify-center space-x-1" onclick="payWithPaystack()">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Pay with Paystack</span>
+                </button>
             </div>
 
             <form id="addPropertyForm" class="space-y-4" onsubmit="handleNewPropertySubmit(event)">
@@ -294,10 +313,14 @@
 
     <script>
         // ==========================================
-        // INITIALIZE EMAILJS WITH YOUR PUBLIC KEY
+        // INITIALIZE EMAILJS WITH YOUR CORRECT CREDENTIALS
         // ==========================================
+        const SERVICE_ID = 'service_ko6zbb1';
+        const TEMPLATE_ID = 'template_z7m2pxr';
+        const PUBLIC_KEY = '07r4_TEDy_49x-48o';
+
         (function() {
-            emailjs.init("07r4_TEDy_49x-48o");
+            emailjs.init(PUBLIC_KEY);
         })();
 
         // PRE-LOADED 60 PROPERTIES (30 Houses/Duplexes/Apartments, 30 Lands)
@@ -507,7 +530,7 @@
         });
         window.addEventListener('touchend', endDrag);
 
-        // Form submission wired with EmailJS
+        // Form submission wired with EmailJS using your exact service & template IDs
         document.getElementById('authMainForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!isHumanVerified) {
@@ -523,15 +546,19 @@
                 authSubmitBtn.disabled = true;
 
                 // ==========================================
-                // SENDING REAL EMAIL VIA EMAILJS
+                // SENDING REAL EMAIL VIA EMAILJS (Fixed IDs)
                 // ==========================================
-                emailjs.send("service_to8flij", "template_z7m2pxr", {
+                const templateParams = {
                     to_email: email,
-                    reset_link: "https://growamnigltd.com/reset-password?email=" + encodeURIComponent(email)
-                })
+                    reply_to: email,
+                    message: "Password reset request link for Growam Nig Ltd: https://growamnigltd.com/reset-password?email=" + encodeURIComponent(email)
+                };
+
+                emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
                 .then(() => {
                     alert('Password reset link successfully sent to ' + email + '!');
                     closeAuthModal();
+                    resetCaptcha();
                 }, (error) => {
                     alert('Failed to send email. Please check your EmailJS configuration.');
                     console.error(error);
@@ -627,6 +654,58 @@
             closeAddPropertyModal();
         }
 
+        // ==================== FLUTTERWAVE PAYMENT ====================
+        function payWithFlutterwave() {
+            const planSelect = document.getElementById('propSubPlan');
+            const amount = planSelect.value;
+            const email = currentUser || "customer@growamnigltd.com";
+
+            FlutterwaveCheckout({
+                public_key: "FLWPUBK_TEST-YOUR_FLUTTERWAVE_PUBLIC_KEY-X", // Replace with your Flutterwave Public Key when ready
+                tx_ref: "growam_tx_" + Date.now(),
+                amount: amount,
+                currency: "NGN",
+                payment_options: "card, banktransfer, ussd",
+                customer: {
+                    email: email,
+                    name: currentUser ? currentUser.split('@')[0] : "Growam User",
+                },
+                customizations: {
+                    title: "Growam Nig Ltd Subscription",
+                    description: "Property Listing Subscription Fee",
+                    logo: "https://assets.piedpiper.com/logo.png",
+                },
+                callback: function (data) {
+                    alert("Flutterwave payment complete! Transaction reference: " + data.transaction_id);
+                },
+                onclose: function() {
+                    console.log("Flutterwave modal closed");
+                }
+            });
+        }
+
+        // ==================== PAYSTACK PAYMENT ====================
+        function payWithPaystack() {
+            const planSelect = document.getElementById('propSubPlan');
+            const amount = parseInt(planSelect.value) * 100; // Paystack expects amount in kobo/cents
+            const email = currentUser || "customer@growamnigltd.com";
+
+            let handler = PaystackPop.setup({
+                key: 'pk_test_YOUR_PAYSTACK_PUBLIC_KEY', // Replace with your Paystack Public Key when ready
+                email: email,
+                amount: amount,
+                currency: 'NGN',
+                ref: 'growam_ref_' + Math.floor((Math.random() * 1000000000) + 1),
+                callback: function(response){
+                    alert('Paystack payment complete! Reference: ' + response.reference);
+                },
+                onClose: function(){
+                    alert('Paystack window closed.');
+                }
+            });
+            handler.openIFrame();
+        }
+
         function toggleChatWindow() {
             document.getElementById('chatWindow').classList.toggle('hidden');
         }
@@ -637,14 +716,14 @@
             const txt = input.value.trim();
             if (!txt) return;
 
-            msgBox.innerHTML += `<div class="flex justify-end"><div class="bg-slate-900 text-white p-2 rounded-xl text-xs max-w-[80%]" >${txt}</div></div>`;
+            msgBox.innerHTML += `<div class="flex justify-end"><div class="bg-slate-900 text-white p-2 rounded-xl text-xs max-w-[80%]">${txt}</div></div>`;
             input.value = '';
             msgBox.scrollTop = msgBox.scrollHeight;
 
             setTimeout(() => {
                 let reply = "Growam Nig Ltd (RC 6893170) offers verified properties. Contact us via WhatsApp at 09069245040.";
                 if (txt.toLowerCase().includes('price') || txt.toLowerCase().includes('subscription')) {
-                    reply = "Subscription plans range from ₦5,000 (7 days) to ₦20,000 (30 days) payable to account 9069245040.";
+                    reply = "Subscription plans range from ₦5,000 (7 days) to ₦20,000 (30 days) payable via direct bank transfer or automated payment options.";
                 }
                 msgBox.innerHTML += `<div class="flex items-start space-x-2"><div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">${reply}</div></div>`;
                 msgBox.scrollTop = msgBox.scrollHeight;
