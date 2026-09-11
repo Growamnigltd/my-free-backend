@@ -6,6 +6,8 @@
     <title>GROWAM NIG LTD | Properties & Real Estate Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS SDK Script -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         .drag-box {
             position: relative;
@@ -95,15 +97,15 @@
         </div>
     </section>
 
-    <!-- Properties Hub Section (30 Properties) -->
+    <!-- Properties Hub Section -->
     <section id="properties" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight">Featured Properties Hub</h2>
-                <p class="text-slate-500 mt-1">Explore our exclusive selection of verified listings across Nigeria.</p>
+                <p class="text-slate-500 mt-1">Explore our exclusive selection of 60 verified listings across Nigeria.</p>
             </div>
             <div class="mt-4 md:mt-0 flex gap-2 overflow-x-auto pb-2">
-                <button onclick="filterProperties('all')" class="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl shadow">All (30)</button>
+                <button onclick="filterProperties('all')" class="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl shadow">All</button>
                 <button onclick="filterProperties('Duplex')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Duplexes</button>
                 <button onclick="filterProperties('Apartment')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Apartments</button>
                 <button onclick="filterProperties('Land')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">Land Parcels</button>
@@ -111,400 +113,11 @@
         </div>
 
         <div id="propertyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- 1 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">4 Bedroom Luxury Duplex</h3>
-                    <p class="text-sm text-slate-500">Lekki Phase 1, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦120,000,000</span>
-                        <button onclick="viewPropertyDetails(1)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 2 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
-                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">3 Bedroom Serviced Apartment</h3>
-                    <p class="text-sm text-slate-500">Victoria Island, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦85,000,000</span>
-                        <button onclick="viewPropertyDetails(2)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 3 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
-                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">600sqm Residential Plot</h3>
-                    <p class="text-sm text-slate-500">Apo District, Abuja</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦35,000,000</span>
-                        <button onclick="viewPropertyDetails(3)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 4 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
-                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">5 Bedroom Detached House</h3>
-                    <p class="text-sm text-slate-500">Maitama, Abuja</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦350,000,000</span>
-                        <button onclick="viewPropertyDetails(4)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 5 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
-                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">2 Bedroom Luxury Flat</h3>
-                    <p class="text-sm text-slate-500">GRA Phase 2, Port Harcourt</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦45,000,000</span>
-                        <button onclick="viewPropertyDetails(5)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 6 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
-                <img src="https://images.unsplash.com/photo-1524813686514-a57563d77b40?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">1000sqm Commercial Land</h3>
-                    <p class="text-sm text-slate-500">Ikeja GRA, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦250,000,000</span>
-                        <button onclick="viewPropertyDetails(6)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 7 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
-                <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">3 Bedroom Semi-Detached</h3>
-                    <p class="text-sm text-slate-500">Sangotedo, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦55,000,000</span>
-                        <button onclick="viewPropertyDetails(7)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 8 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
-                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">1 Bedroom Executive Studio</h3>
-                    <p class="text-sm text-slate-500">Wuse 2, Abuja</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦30,000,000</span>
-                        <button onclick="viewPropertyDetails(8)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 9 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
-                <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">500sqm Gated Estate Plot</h3>
-                    <p class="text-sm text-slate-500">Lugbe, Abuja</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦18,000,000</span>
-                        <button onclick="viewPropertyDetails(9)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 10 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
-                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">6 Bedroom Contemporary Mansion</h3>
-                    <p class="text-sm text-slate-500">Asokoro, Abuja</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦480,000,000</span>
-                        <button onclick="viewPropertyDetails(10)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 11 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
-                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">4 Bedroom Penthouse Apartment</h3>
-                    <p class="text-sm text-slate-500">Epe, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦70,000,000</span>
-                        <button onclick="viewPropertyDetails(11)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 12 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
-                <img src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">Plots for Industrial Hub</h3>
-                    <p class="text-sm text-slate-500">Ibafo, Ogun State</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦15,000,000</span>
-                        <button onclick="viewPropertyDetails(12)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 13 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
-                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">4 Bedroom Terrace Duplex</h3>
-                    <p class="text-sm text-slate-500">Ikate, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦110,000,000</span>
-                        <button onclick="viewPropertyDetails(13)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 14 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
-                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">2 Bedroom Modern Flat</h3>
-                    <p class="text-sm text-slate-500">Bodija, Ibadan</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦32,000,000</span>
-                        <button onclick="viewPropertyDetails(14)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 15 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
-                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">Waterfront Land Plot</h3>
-                    <p class="text-sm text-slate-500">Eleganza, Lekki</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦90,000,000</span>
-                        <button onclick="viewPropertyDetails(15)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 16 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">5 Bedroom Fully Detached Duplex</h3>
-                    <p class="text-sm text-slate-500">Ajah, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦95,000,000</span>
-                        <button onclick="viewPropertyDetails(16)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 17 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
-                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">3 Bedroom Luxury Apartment</h3>
-                    <p class="text-sm text-slate-500">Gwarinpa, Abuja</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦65,000,000</span>
-                        <button onclick="viewPropertyDetails(17)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 18 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
-                <img src="https://images.unsplash.com/photo-1524813686514-a57563d77b40?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">450sqm Dry Land Parcel</h3>
-                    <p class="text-sm text-slate-500">Ibeju Lekki, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦12,000,000</span>
-                        <button onclick="viewPropertyDetails(18)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 19 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
-                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">4 Bedroom Smart Duplex</h3>
-                    <p class="text-sm text-slate-500">Chevron, Lekki</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦135,000,000</span>
-                        <button onclick="viewPropertyDetails(19)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 20 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
-                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">2 Bedroom Serviced Flat</h3>
-                    <p class="text-sm text-slate-500">Jabi, Abuja</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦50,000,000</span>
-                        <button onclick="viewPropertyDetails(20)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 21 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
-                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">Prime Residential Plot</h3>
-                    <p class="text-sm text-slate-500">Alalubosa GRA, Ibadan</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦28,000,000</span>
-                        <button onclick="viewPropertyDetails(21)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 22 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
-                <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">5 Bedroom Executive Duplex</h3>
-                    <p class="text-sm text-slate-500">Katampe Extension, Abuja</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦280,000,000</span>
-                        <button onclick="viewPropertyDetails(22)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 23 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
-                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">3 Bedroom Luxury Flat</h3>
-                    <p class="text-sm text-slate-500">Oniru, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦95,000,000</span>
-                        <button onclick="viewPropertyDetails(23)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 24 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
-                <img src="https://images.unsplash.com/photo-1524813686514-a57563d77b40?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">600sqm Land Allocation</h3>
-                    <p class="text-sm text-slate-500">Kuje, Abuja</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦10,000,000</span>
-                        <button onclick="viewPropertyDetails(24)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 25 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
-                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">4 Bedroom Luxury Townhouse</h3>
-                    <p class="text-sm text-slate-500">Ikoyi, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦450,000,000</span>
-                        <button onclick="viewPropertyDetails(25)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 26 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
-                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">1 Bedroom Modern Loft</h3>
-                    <p class="text-sm text-slate-500">Yaba, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦40,000,000</span>
-                        <button onclick="viewPropertyDetails(26)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 27 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
-                <img src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">800sqm Commercial Plot</h3>
-                    <p class="text-sm text-slate-500">Trans Amadi, Port Harcourt</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦85,000,000</span>
-                        <button onclick="viewPropertyDetails(27)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 28 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Duplex">
-                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Duplex</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">3 Bedroom Contemporary Duplex</h3>
-                    <p class="text-sm text-slate-500">Lokogoma, Abuja</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦68,000,000</span>
-                        <button onclick="viewPropertyDetails(28)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 29 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Apartment">
-                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Apartment</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">2 Bedroom Luxury Flat</h3>
-                    <p class="text-sm text-slate-500">Surulere, Lagos</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦55,000,000</span>
-                        <button onclick="viewPropertyDetails(29)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
-            <!-- 30 -->
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card" data-category="Land">
-                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover" alt="Property">
-                <div class="p-5">
-                    <span class="text-xs font-bold text-blue-600 uppercase">Land</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-1">1000sqm Prime Land Parcel</h3>
-                    <p class="text-sm text-slate-500">Gwarinpa Estate, Abuja</p>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-black text-slate-950">₦120,000,000</span>
-                        <button onclick="viewPropertyDetails(30)" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
-                    </div>
-                </div>
-            </div>
+            <!-- Populated dynamically via script below -->
         </div>
     </section>
 
-    <!-- AI Chatbot Section / Floating Widget -->
+    <!-- AI Chatbot Floating Widget -->
     <div class="fixed bottom-6 right-6 z-50">
         <div id="chatWindow" class="hidden bg-white w-80 sm:w-96 rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden mb-4 transition-all duration-300">
             <div class="bg-blue-600 text-white p-4 flex items-center justify-between">
@@ -520,7 +133,7 @@
             
             <div id="chatMessages" class="p-4 h-72 overflow-y-auto space-y-3 bg-slate-50 text-sm">
                 <div class="flex items-start space-x-2">
-                    <div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">Hello! Welcome to Growam Nig Ltd (RC 6893170). Sign up to post your property listings or ask me anything!</div>
+                    <div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">Hello! Welcome to Growam Nig Ltd (RC 6893170). Sign up to post listings or ask me anything!</div>
                 </div>
             </div>
             
@@ -554,26 +167,24 @@
                 <p class="text-xs text-slate-500">© 2026 Growam Nig Ltd. All rights reserved.</p>
             </div>
             <div class="flex space-x-4">
-                <a href="https://wa.me/2349069245040" target="_blank" class="hover:text-white transition" title="WhatsApp 1"><i class="fa-brands fa-whatsapp text-xl"></i></a>
-                <a href="mailto:growamnigltd@gmail.com" class="hover:text-white transition" title="Email"><i class="fa-solid fa-envelope text-xl"></i></a>
+                <a href="https://wa.me/2349069245040" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+                <a href="mailto:growamnigltd@gmail.com" class="hover:text-white transition"><i class="fa-solid fa-envelope text-xl"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- AUTH MODAL (WITH CAPTCHA VERIFY BUTTON) -->
+    <!-- AUTH MODAL -->
     <div id="authModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 relative overflow-hidden">
             <button onclick="closeAuthModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-xl">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             
-            <!-- Dynamic Modal Header Tabs -->
             <div class="flex space-x-4 border-b border-slate-100 pb-4 mb-6" id="authTabsContainer">
                 <button type="button" id="tabSignin" onclick="toggleAuthTab('signin')" class="text-lg font-bold text-blue-600 border-b-2 border-blue-600 pb-2">Sign In</button>
                 <button type="button" id="tabSignup" onclick="toggleAuthTab('signup')" class="text-lg font-bold text-slate-400 pb-2 hover:text-slate-600">Sign Up</button>
             </div>
 
-            <!-- Single Smart Form Handler -->
             <form id="authMainForm" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Email Address</label>
@@ -605,33 +216,27 @@
         </div>
     </div>
 
-    <!-- ADD PROPERTY & SUBSCRIPTION MODAL -->
+    <!-- ADD PROPERTY MODAL -->
     <div id="addPropertyModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 sm:p-8 relative my-8">
-            <button onclick="closeAddPropertyModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+            <button onclick="closeAddPropertyModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
             
             <h3 class="text-xl font-black text-slate-900 mb-1">Upload Property Listing</h3>
             <p class="text-xs text-slate-500 mb-4">Complete subscription payment to Growam Nig Ltd, then fill in details and upload your property image.</p>
 
-            <!-- Company Bank Account Info Box -->
             <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-6">
                 <h4 class="text-xs font-black text-blue-900 uppercase tracking-wider mb-2"><i class="fa-solid fa-building-columns mr-1"></i> Subscription Bank Account</h4>
                 <div class="text-xs space-y-1 text-blue-800">
                     <p><strong>Company:</strong> Growam Nig Ltd (RC 6893170)</p>
-                    <p><strong>Bank:</strong> Kuda </p>
+                    <p><strong>Bank:</strong> kuda mfb </p>
                     <p><strong>Account Number:</strong> 3003012517</p>
-                </div>
-                <div class="mt-3 pt-3 border-t border-blue-200 text-xs font-semibold text-blue-900">
-                    Plans: ₦5,000 (7 Days) | ₦10,000 (14 Days) | ₦15,000 (21 Days) | ₦20,000 (30 Days)
                 </div>
             </div>
 
             <form id="addPropertyForm" class="space-y-4" onsubmit="handleNewPropertySubmit(event)">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Select Subscription Plan</label>
-                    <select id="propSubPlan" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm">
+                    <select id="propSubPlan" required class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm">
                         <option value="5000">₦5,000 - 7 Days Duration</option>
                         <option value="10000">₦10,000 - 14 Days Duration</option>
                         <option value="15000">₦15,000 - 21 Days Duration</option>
@@ -641,17 +246,17 @@
 
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Property Title</label>
-                    <input type="text" id="propTitle" required placeholder="e.g. 4 Bedroom Luxury Duplex" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm">
+                    <input type="text" id="propTitle" required placeholder="e.g. 4 Bedroom Luxury Duplex" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Price (₦)</label>
-                        <input type="text" id="propPrice" required placeholder="e.g. 150,000,000" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm">
+                        <input type="text" id="propPrice" required placeholder="e.g. 150,000,000" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm">
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Category</label>
-                        <select id="propCategory" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm">
+                        <select id="propCategory" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm">
                             <option value="Duplex">Duplex</option>
                             <option value="Apartment">Apartment</option>
                             <option value="Land">Land</option>
@@ -661,24 +266,21 @@
 
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Location</label>
-                    <input type="text" id="propLocation" required placeholder="e.g. Lekki Phase 1, Lagos" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm">
+                    <input type="text" id="propLocation" required placeholder="e.g. Lekki Phase 1, Lagos" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Description & Features</label>
-                    <textarea id="propDesc" rows="3" required placeholder="Describe amenities, C of O details..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm"></textarea>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Description</label>
+                    <textarea id="propDesc" rows="3" required placeholder="Describe amenities..." class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm"></textarea>
                 </div>
 
-                <!-- House Image Upload Button -->
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Property Image</label>
-                    <div class="flex items-center space-x-4">
-                        <label class="cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-600 font-bold px-4 py-3 rounded-xl border border-blue-200 transition flex items-center space-x-2 text-sm flex-1 justify-center">
-                            <i class="fa-solid fa-camera"></i>
-                            <span>Tap to Choose Image</span>
-                            <input type="file" id="propImageFile" accept="image/*" class="hidden" onchange="previewUploadedImage(event)">
-                        </label>
-                    </div>
+                    <label class="cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-600 font-bold px-4 py-3 rounded-xl border border-blue-200 transition flex items-center space-x-2 text-sm flex-1 justify-center">
+                        <i class="fa-solid fa-camera"></i>
+                        <span>Tap to Choose Image</span>
+                        <input type="file" id="propImageFile" accept="image/*" class="hidden" onchange="previewUploadedImage(event)">
+                    </label>
                     <div id="imagePreviewContainer" class="hidden mt-3 relative">
                         <img id="imagePreview" src="" class="w-full h-36 object-cover rounded-xl border border-slate-200">
                         <button type="button" onclick="clearUploadedImage()" class="absolute top-2 right-2 bg-slate-900/80 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs"><i class="fa-solid fa-xmark"></i></button>
@@ -691,6 +293,109 @@
     </div>
 
     <script>
+        // ==========================================
+        // INITIALIZE EMAILJS WITH YOUR PUBLIC KEY
+        // ==========================================
+        (function() {
+            emailjs.init("07r4_TEDy_49x-48o");
+        })();
+
+        // PRE-LOADED 60 PROPERTIES (30 Houses/Duplexes/Apartments, 30 Lands)
+        const initialProperties = [
+            // Duplexes & Mansions (1-15)
+            {title: "Luxury 5-Bedroom Detached Duplex", location: "Ikoyi, Lagos", price: "450,000,000", category: "Duplex", desc: "Fully serviced with private swimming pool, smart home automation, and 24-hour armed security.", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600"},
+            {title: "Modern 4-Bedroom Semi-Detached Duplex", location: "Lekki Phase 1, Lagos", price: "180,000,000", category: "Duplex", desc: "Contemporary architecture, stamped concrete compound, and boys' quarters (BQ).", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=600"},
+            {title: "Exquisite 6-Bedroom Mansion", location: "Asokoro, Abuja", price: "950,000,000", category: "Duplex", desc: "Ultra-luxury hilltop residence featuring panoramic city views, elevator, and underground parking.", img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=600"},
+            {title: "Spacious 4-Bedroom Terrace Duplex", location: "Victoria Island, Lagos", price: "220,000,000", category: "Duplex", desc: "Prime commercial/residential district proximity, private balconies, and backup generator.", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=600"},
+            {title: "Brand New 5-Bedroom Duplex", location: "Guzape, Abuja", price: "320,000,000", category: "Duplex", desc: "Elegant finishing, pop ceilings, fitted kitchen, and serene neighborhood.", img: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=600"},
+            {title: "Classic 4-Bedroom Duplex with BQ", location: "Ikeja GRA, Lagos", price: "250,000,000", category: "Duplex", desc: "Quiet upscale neighborhood, easy access to airport, and mature landscaping.", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600"},
+            {title: "Contemporary 5-Bedroom Smart Duplex", location: "Maitama, Abuja", price: "850,000,000", category: "Duplex", desc: "State-of-the-art security, landscaped gardens, and premium Italian marble fittings.", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=600"},
+            {title: "Stunning 4-Bedroom Duplex", location: "Chevron, Lekki, Lagos", price: "140,000,000", category: "Duplex", desc: "Gated community with clean water supply, paved access roads, and tight gate security.", img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=600"},
+            {title: "Posh 5-Bedroom Duplex", location: "Jabi, Abuja", price: "400,000,000", category: "Duplex", desc: "Close to Jabi Lake Mall, spacious master suite, and custom walk-in closets.", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=600"},
+            {title: "Chic 3-Bedroom Semi-Detached Duplex", location: "Ajah, Lagos", price: "85,000,000", category: "Duplex", desc: "Affordable luxury in a rapidly developing and accessible axis.", img: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=600"},
+            {title: "Grand 6-Bedroom Executive Duplex", location: "Wuse 2, Abuja", price: "700,000,000", category: "Duplex", desc: "Prime central location, ideal for corporate headquarters or luxury family living.", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600"},
+            {title: "Executive 4-Bedroom Duplex", location: "Magodo Phase 2, Lagos", price: "160,000,000", category: "Duplex", desc: "Elevated view of Lagos mainland, serene environment, and high security.", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=600"},
+            {title: "Modern 5-Bedroom Duplex", location: "Katampe Extension, Abuja", price: "380,000,000", category: "Duplex", desc: "Rocky scenery, paved roads, and top-tier architectural design.", img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=600"},
+            {title: "Luxurious 4-Bedroom Duplex", location: "Ikate, Lekki, Lagos", price: "190,000,000", category: "Duplex", desc: "Close to major leisure spots, rooftop terrace, and fitted kitchen.", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=600"},
+            {title: "Magnificent 7-Bedroom Palace Duplex", location: "Asokoro, Abuja", price: "1,200,000,000", category: "Duplex", desc: "Ultimate luxury compound with guest chalet, security post, and fountain.", img: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=600"},
+
+            // Apartments & Flats (16-30)
+            {title: "Cozy 3-Bedroom Serviced Apartment", location: "Victoria Island, Lagos", price: "90,000,000", category: "Apartment", desc: "High-rise building with elevator, gym, and rooftop pool.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600"},
+            {title: "Luxury 2-Bedroom Apartment", location: "Eko Atlantic City, Lagos", price: "280,000,000", category: "Apartment", desc: "Ocean view, world-class urban infrastructure, and uninterrupted power.", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600"},
+            {title: "Spacious 4-Bedroom Apartment", location: "Ikoyi, Lagos", price: "350,000,000", category: "Apartment", desc: "Serviced complex with tennis court, children's playground, and ample parking.", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600"},
+            {title: "Modern 3-Bedroom Apartment", location: "Utako, Abuja", price: "75,000,000", category: "Apartment", desc: "Central location, accessible roads, and reliable security service.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600"},
+            {title: "Executive 2-Bedroom Luxury Flat", location: "Lekki Phase 1, Lagos", price: "70,000,000", category: "Apartment", desc: "Ideal short-let investment property with high rental yields.", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600"},
+            {title: "Fully Furnished 3-Bedroom Apartment", location: "Central Business District, Abuja", price: "150,000,000", category: "Apartment", desc: "Move-in ready with high-end furniture and appliances included.", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600"},
+            {title: "Stylish 1-Bedroom Studio Apartment", location: "Oniru, Lagos", price: "45,000,000", category: "Apartment", desc: "Perfect starter home or investment asset near the Atlantic shoreline.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600"},
+            {title: "Spacious 3-Bedroom Serviced Flat", location: "Garki, Abuja", price: "85,000,000", category: "Apartment", desc: "Secure gated estate close to shopping hubs and schools.", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600"},
+            {title: "Contemporary 2-Bedroom Apartment", location: "Sangotedo, Lagos", price: "40,000,000", category: "Apartment", desc: "Close to Novare Shoprite mall, steady water, and electricity.", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600"},
+            {title: "Luxury Penthouse Apartment", location: "Victoria Island, Lagos", price: "600,000,000", category: "Apartment", desc: "Top-floor panoramic views, private elevator access, and sprawling terrace.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600"},
+            {title: "Standard 3-Bedroom Flat", location: "Surulere, Lagos", price: "65,000,000", category: "Apartment", desc: "Established neighborhood with great community infrastructure.", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600"},
+            {title: "Executive 4-Bedroom Apartment", location: "Mabushi, Abuja", price: "130,000,000", category: "Apartment", desc: "Spacious living areas and quick access to major highway interchanges.", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600"},
+            {title: "Modern 2-Bedroom Flat", location: "Gwarinpa, Abuja", price: "55,000,000", category: "Apartment", desc: "Popular residential district with active commercial amenities.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=600"},
+            {title: "Chic 3-Bedroom Apartment", location: "Ajah, Lagos", price: "50,000,000", category: "Apartment", desc: "Clean finishing, tiled floors, and secure perimeter fencing.", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600"},
+            {title: "Prime 3-Bedroom Apartment", location: "Apo, Abuja", price: "70,000,000", category: "Apartment", desc: "Quiet neighborhood with reliable access roads and clean borehole water.", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600"},
+
+            // Lands & Plots (31-60)
+            {title: "600sqm Residential Plot", location: "Guzape, Abuja", price: "120,000,000", category: "Land", desc: "Ready for immediate construction with C of O and approved building layout.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "1,000sqm Commercial Land", location: "Central Business District, Abuja", price: "500,000,000", category: "Land", desc: "Prime location suited for high-rise office complex or plaza development.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "500sqm Land Parcel", location: "Lekki Phase 2, Lagos", price: "85,000,000", category: "Land", desc: "Dry land in a fully inhabited neighborhood with active drainage systems.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Plot of Land (600sqm)", location: "Katampe Extension, Abuja", price: "90,000,000", category: "Land", desc: "Hilly terrain with scenic views and complete title documentation.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Prime Acre (6 Plots)", location: "Ibeju Lekki, Lagos", price: "150,000,000", category: "Land", desc: "High-growth corridor near the Dangote Refinery and deep sea port.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Residential Plot (500sqm)", location: "Apo District, Abuja", price: "45,000,000", category: "Land", desc: "Fenced estate with security gatehouse and electricity transformers installed.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Commercial Plot (1,200sqm)", location: "Ikeja, Lagos", price: "350,000,000", category: "Land", desc: "High foot-traffic zone ideal for retail banking or plaza construction.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "600sqm Land Parcel", location: "Mabushi, Abuja", price: "110,000,000", category: "Land", desc: "Central location with fast access to major arterials.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Dry Plot of Land (600sqm)", location: "Sangotedo, Lagos", price: "30,000,000", category: "Land", desc: "Fast-developing neighborhood near Novare Mall with global C of O.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Residential Plot", location: "Jahi, Abuja", price: "95,000,000", category: "Land", desc: "Serviced plot within a secure, gated community layout.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Waterfront Land Plot (1,000sqm)", location: "Banana Island, Lagos", price: "2,500,000,000", category: "Land", desc: "Ultra-exclusive waterfront real estate with direct lagoon access.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Plot of Land (500sqm)", location: "Life Camp, Abuja", price: "70,000,000", category: "Land", desc: "Peaceful residential zone with tarred access roads.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Residential Land (600sqm)", location: "Ajah waterfront axis, Lagos", price: "40,000,000", category: "Land", desc: "Dry sand-filled land ready for immediate foundation casting.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Commercial Plot (2,000sqm)", location: "Wuye, Abuja", price: "450,000,000", category: "Land", desc: "Excellent location for mixed-use commercial and residential block.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Land Parcel (600sqm)", location: "Magodo Phase 2, Lagos", price: "120,000,000", category: "Land", desc: "Rare vacant plot available in a fully built-up upscale estate.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Residential Plot", location: "Gwarinpa, Abuja", price: "60,000,000", category: "Land", desc: "Fully serviced plot close to commercial banks and shopping centers.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Plot of Land (500sqm)", location: "Chevron Drive, Lekki, Lagos", price: "95,000,000", category: "Land", desc: "Secure gated corridor with excellent drainage and paved roads.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Large Parcel (2 Acres)", location: "Kuje, Abuja", price: "80,000,000", category: "Land", desc: "Ideal for estate development or agricultural warehousing.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Residential Plot (600sqm)", location: "Ajiran, Lekki, Lagos", price: "110,000,000", category: "Land", desc: "High demand area surrounded by luxury developments and schools.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Plot of Land (500sqm)", location: "Lugbe, Abuja", price: "25,000,000", category: "Land", desc: "Affordable suburban land close to the airport road corridor.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Dry Land (600sqm)", location: "Epe, Lagos", price: "15,000,000", category: "Land", desc: "High-appreciation potential zone near upcoming international airport.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Residential Plot", location: "Bwari, Abuja", price: "18,000,000", category: "Land", desc: "Serene environment close to tertiary institutions and nature reserves.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Plot of Land (500sqm)", location: "Abijo, Lagos", price: "22,000,000", category: "Land", desc: "Gated estate with perimeter fence, streetlights, and security.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Commercial Land (1,500sqm)", location: "Utako, Abuja", price: "380,000,000", category: "Land", desc: "High-density commercial district suited for hotel or office block.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Residential Plot (600sqm)", location: "Sangotedo Extension, Lagos", price: "20,000,000", category: "Land", desc: "Rapidly developing neighborhood with great accessibility.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Plot of Land", location: "Karu, Abuja", price: "30,000,000", category: "Land", desc: "Developed neighborhood with electricity and running water networks.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Dry Plot (500sqm)", location: "Lakowe, Lagos", price: "28,000,000", category: "Land", desc: "Close to Lakowe Lakes Golf and Country Estate.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Residential Plot (600sqm)", location: "Kubwa, Abuja", price: "35,000,000", category: "Land", desc: "Active suburban hub with bustling commercial activities.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"},
+            {title: "Waterfront Land (2,000sqm)", location: "Lekki Phase 1, Lagos", price: "900,000,000", category: "Land", desc: "Premium waterfront property ideal for luxury apartment block development.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"},
+            {title: "Residential Plot (500sqm)", location: "Lokogoma, Abuja", price: "40,000,000", category: "Land", desc: "Fast-growing district with multiple access routes into the city center.", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"}
+        ];
+
+        function renderInitialProperties() {
+            const grid = document.getElementById('propertyGrid');
+            grid.innerHTML = '';
+            initialProperties.forEach((p, idx) => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card';
+                card.setAttribute('data-category', p.category);
+                card.innerHTML = `
+                    <img src="${p.img}" class="w-full h-48 object-cover" alt="Property">
+                    <div class="p-5">
+                        <span class="text-xs font-bold text-blue-600 uppercase">${p.category}</span>
+                        <h3 class="text-lg font-bold text-slate-900 mt-1">${p.title}</h3>
+                        <p class="text-sm text-slate-500">${p.location}</p>
+                        <p class="text-xs text-slate-400 mt-2 line-clamp-2">${p.desc}</p>
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="font-black text-slate-950">₦${p.price}</span>
+                            <button onclick="viewPropertyDetails(${idx + 1})" class="text-xs font-bold text-blue-600 hover:underline">View Details</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Render properties on page load
+        window.addEventListener('DOMContentLoaded', renderInitialProperties);
+
         let authMode = 'signin';
         let isHumanVerified = false;
         let currentUser = null;
@@ -732,7 +437,7 @@
             resetCaptcha();
         }
 
-        // Robust Touch & Mouse Drag Captcha Logic for Mobile and Desktop
+        // Captcha Drag Logic
         const dragBtn = document.getElementById('dragCaptchaBtn');
         const dragBox = document.getElementById('dragCaptchaBox');
         const dragText = document.getElementById('dragCaptchaText');
@@ -789,24 +494,20 @@
             }
         }
 
-        // Mouse Events
         dragBtn.addEventListener('mousedown', (e) => startDrag(e.clientX));
         window.addEventListener('mousemove', (e) => onDrag(e.clientX));
         window.addEventListener('mouseup', endDrag);
 
-        // Touch Events for iPhone / Mobile
         dragBtn.addEventListener('touchstart', (e) => {
             startDrag(e.touches[0].clientX);
             e.preventDefault();
         });
         window.addEventListener('touchmove', (e) => {
-            if (isDragging) {
-                onDrag(e.touches[0].clientX);
-            }
+            if (isDragging) onDrag(e.touches[0].clientX);
         });
         window.addEventListener('touchend', endDrag);
 
-        // Form submission with human check validation
+        // Form submission wired with EmailJS
         document.getElementById('authMainForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!isHumanVerified) {
@@ -817,16 +518,35 @@
             const email = document.getElementById('authEmail').value;
             currentUser = email;
 
-            if (authMode === 'signup') {
-                alert('Account successfully created! You can now post your property and upload images.');
-            } else if (authMode === 'signin') {
-                alert('Sign In successful! Welcome back.');
-            } else {
-                alert('Password reset link sent to your email.');
-            }
+            if (authMode === 'forgot') {
+                authSubmitBtn.innerText = "Sending Email...";
+                authSubmitBtn.disabled = true;
 
-            closeAuthModal();
-            updateUIAfterAuth();
+                // ==========================================
+                // SENDING REAL EMAIL VIA EMAILJS
+                // ==========================================
+                emailjs.send("service_to8flij", "template_z7m2pxr", {
+                    to_email: email,
+                    reset_link: "https://growamnigltd.com/reset-password?email=" + encodeURIComponent(email)
+                })
+                .then(() => {
+                    alert('Password reset link successfully sent to ' + email + '!');
+                    closeAuthModal();
+                }, (error) => {
+                    alert('Failed to send email. Please check your EmailJS configuration.');
+                    console.error(error);
+                    resetCaptcha();
+                });
+
+            } else if (authMode === 'signup') {
+                alert('Account successfully created! You can now post properties.');
+                closeAuthModal();
+                updateUIAfterAuth();
+            } else {
+                alert('Sign In successful! Welcome back.');
+                closeAuthModal();
+                updateUIAfterAuth();
+            }
         });
 
         function updateUIAfterAuth() {
@@ -846,10 +566,6 @@
                 openAuthModal('signup');
                 return;
             }
-            openAddPropertyModal();
-        }
-
-        function openAddPropertyModal() {
             document.getElementById('addPropertyModal').classList.remove('hidden');
         }
 
@@ -862,12 +578,10 @@
         function previewUploadedImage(event) {
             const file = event.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(e) {
                 uploadedImageBase64 = e.target.result;
-                const preview = document.getElementById('imagePreview');
-                preview.src = uploadedImageBase64;
+                document.getElementById('imagePreview').src = uploadedImageBase64;
                 document.getElementById('imagePreviewContainer').classList.remove('hidden');
             };
             reader.readAsDataURL(file);
@@ -882,13 +596,11 @@
 
         function handleNewPropertySubmit(e) {
             e.preventDefault();
-            const plan = document.getElementById('propSubPlan').value;
             const title = document.getElementById('propTitle').value;
             const price = document.getElementById('propPrice').value;
             const category = document.getElementById('propCategory').value;
             const location = document.getElementById('propLocation').value;
             const desc = document.getElementById('propDesc').value;
-            
             const imageUrl = uploadedImageBase64 || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600';
 
             const grid = document.getElementById('propertyGrid');
@@ -911,14 +623,12 @@
             `;
 
             grid.prepend(newCard);
-            alert('Property successfully submitted! Subscription verified. Listing live on hub.');
+            alert('Property successfully submitted! Listing is now live on the hub.');
             closeAddPropertyModal();
         }
 
-        // Chatbot Widget Toggle and Replies
         function toggleChatWindow() {
-            const win = document.getElementById('chatWindow');
-            win.classList.toggle('hidden');
+            document.getElementById('chatWindow').classList.toggle('hidden');
         }
 
         function sendChatMessage() {
@@ -927,17 +637,14 @@
             const txt = input.value.trim();
             if (!txt) return;
 
-            msgBox.innerHTML += `<div class="flex justify-end"><div class="bg-slate-900 text-white p-2 rounded-xl text-xs max-w-[80%]">${txt}</div></div>`;
+            msgBox.innerHTML += `<div class="flex justify-end"><div class="bg-slate-900 text-white p-2 rounded-xl text-xs max-w-[80%]" >${txt}</div></div>`;
             input.value = '';
             msgBox.scrollTop = msgBox.scrollHeight;
 
             setTimeout(() => {
-                let reply = "Growam Nig Ltd (RC 6893170) offers verified properties. Contact us via WhatsApp at 09069245040 or email growamnigltd@gmail.com.";
-                const lower = txt.toLowerCase();
-                if (lower.includes('price') || lower.includes('cost') || lower.includes('subscription')) {
-                    reply = "Subscription plans: ₦5,000 (7 days), ₦10,000 (14 days), ₦15,000 (21 days), and ₦20,000 (30 days) payable to account 9069245040.";
-                } else if (lower.includes('whatsapp') || lower.includes('call')) {
-                    reply = "You can reach us on our WhatsApp lines: 09069245040 and 09064518552.";
+                let reply = "Growam Nig Ltd (RC 6893170) offers verified properties. Contact us via WhatsApp at 09069245040.";
+                if (txt.toLowerCase().includes('price') || txt.toLowerCase().includes('subscription')) {
+                    reply = "Subscription plans range from ₦5,000 (7 days) to ₦20,000 (30 days) payable to account 9069245040.";
                 }
                 msgBox.innerHTML += `<div class="flex items-start space-x-2"><div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">${reply}</div></div>`;
                 msgBox.scrollTop = msgBox.scrollHeight;
@@ -945,8 +652,7 @@
         }
 
         function filterProperties(category) {
-            const cards = document.querySelectorAll('.property-card');
-            cards.forEach(card => {
+            document.querySelectorAll('.property-card').forEach(card => {
                 if (category === 'all' || card.getAttribute('data-category') === category) {
                     card.style.display = 'block';
                 } else {
@@ -955,11 +661,8 @@
             });
         }
 
-        function viewPropertyDetails(id) {
-            alert('Loading secure deed and inspection options for property #' + id);
-        }
-
-        function openProfileModal() { alert('User Profile & Active Subscription status.'); }
+        function viewPropertyDetails(id) { alert('Loading secure property deed and details #' + id); }
+        function openProfileModal() { alert('User Profile & Active Subscription info.'); }
         function openCartModal() { alert('Your saved real estate portfolio is currently empty.'); }
     </script>
 </body>
