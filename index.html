@@ -530,7 +530,7 @@
         });
         window.addEventListener('touchend', endDrag);
 
-        // Form submission wired with EmailJS using your exact service & template IDs
+        // Form submission wired with EmailJS
         document.getElementById('authMainForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!isHumanVerified) {
@@ -545,9 +545,6 @@
                 authSubmitBtn.innerText = "Sending Email...";
                 authSubmitBtn.disabled = true;
 
-                // ==========================================
-                // SENDING REAL EMAIL VIA EMAILJS (Fixed IDs)
-                // ==========================================
                 const templateParams = {
                     to_email: email,
                     reply_to: email,
@@ -566,9 +563,29 @@
                 });
 
             } else if (authMode === 'signup') {
-                alert('Account successfully created! You can now post properties.');
-                closeAuthModal();
-                updateUIAfterAuth();
+                authSubmitBtn.innerText = "Creating Account...";
+                authSubmitBtn.disabled = true;
+
+                const welcomeParams = {
+                    to_email: email,
+                    reply_to: email,
+                    message: "Congratulations! Your account with Growam Nig Ltd (RC 6893170) has been successfully created. You can now log in, post property listings, and explore our verified real estate hub."
+                };
+
+                emailjs.send(SERVICE_ID, TEMPLATE_ID, welcomeParams, PUBLIC_KEY)
+                .then(() => {
+                    alert('Account successfully created! A welcome email has been sent to ' + email + '.');
+                    closeAuthModal();
+                    updateUIAfterAuth();
+                    resetCaptcha();
+                }, (error) => {
+                    alert('Account created, but failed to send welcome email.');
+                    console.error(error);
+                    closeAuthModal();
+                    updateUIAfterAuth();
+                    resetCaptcha();
+                });
+
             } else {
                 alert('Sign In successful! Welcome back.');
                 closeAuthModal();
@@ -661,7 +678,7 @@
             const email = currentUser || "customer@growamnigltd.com";
 
             FlutterwaveCheckout({
-                public_key: "FLWPUBK_TEST-YOUR_FLUTTERWAVE_PUBLIC_KEY-X", // Replace with your Flutterwave Public Key when ready
+                public_key: "FLWPUBK_TEST-YOUR_FLUTTERWAVE_PUBLIC_KEY-X",
                 tx_ref: "growam_tx_" + Date.now(),
                 amount: amount,
                 currency: "NGN",
@@ -687,11 +704,11 @@
         // ==================== PAYSTACK PAYMENT ====================
         function payWithPaystack() {
             const planSelect = document.getElementById('propSubPlan');
-            const amount = parseInt(planSelect.value) * 100; // Paystack expects amount in kobo/cents
+            const amount = parseInt(planSelect.value) * 100;
             const email = currentUser || "customer@growamnigltd.com";
 
             let handler = PaystackPop.setup({
-                key: 'pk_test_YOUR_PAYSTACK_PUBLIC_KEY', // Replace with your Paystack Public Key when ready
+                key: 'pk_test_YOUR_PAYSTACK_PUBLIC_KEY',
                 email: email,
                 amount: amount,
                 currency: 'NGN',
@@ -716,7 +733,7 @@
             const txt = input.value.trim();
             if (!txt) return;
 
-            msgBox.innerHTML += `<div class="flex justify-end"><div class="bg-slate-900 text-white p-2 rounded-xl text-xs max-w-[80%]">${txt}</div></div>`;
+            msgBox.innerHTML += `<div class="flex justify-end"><div class="bg-slate-900 text-white p-2 rounded-xl text-xs max-w-[80%]" >${txt}</div></div>`;
             input.value = '';
             msgBox.scrollTop = msgBox.scrollHeight;
 
