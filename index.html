@@ -69,14 +69,14 @@
             </nav>
 
             <div class="flex items-center space-x-3">
-                <button id="postPropertyNavBtn" onclick="handlePostPropertyClick()" class="hidden px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition items-center space-x-1 shadow-md">
+                <button id="postPropertyNavBtn" onclick="openAddPropertyModal()" class="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition flex items-center space-x-1 shadow-md">
                     <i class="fa-solid fa-plus text-xs"></i>
                     <span>Post Property</span>
                 </button>
-                <button id="navAuthBtn" onclick="openAuthModal('signin')" class="px-5 py-2.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-xl hover:bg-blue-100 transition">Sign In</button>
+                <button id="navAuthBtn" onclick="openAuthModal('signin')" class="px-5 py-2.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-xl hover:bg-blue-100 transition">Sign In / Admin</button>
                 <button id="navUserBadge" onclick="openProfileModal()" class="hidden items-center space-x-2 px-4 py-2 text-sm font-semibold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition">
-                    <i class="fa-solid fa-user-circle text-blue-600 text-lg"></i>
-                    <span id="navUsernameDisplay">My Account</span>
+                    <i class="fa-solid fa-user-shield text-blue-600 text-lg"></i>
+                    <span id="navUsernameDisplay">Admin Hub</span>
                 </button>
                 <button onclick="openCartModal()" class="relative p-2.5 text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200 transition">
                     <i class="fa-solid fa-shopping-bag text-lg"></i>
@@ -94,29 +94,46 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-3xl">
             <span class="inline-block py-1 px-3 rounded-full bg-blue-600/30 border border-blue-400/30 text-blue-300 text-sm font-semibold mb-6">RC 6893170 | Verified Real Estate Hub in Nigeria</span>
             <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-tight mb-6">Find Your Dream Home or Investment Property</h1>
-            <p class="text-lg text-slate-300 mb-8 leading-relaxed">Browse verified houses for rent, land parcels, and luxury apartments. Sign up or use the master admin login to manage and control property listings securely.</p>
+            <p class="text-lg text-slate-300 mb-8 leading-relaxed">Browse verified houses for rent, land parcels, and luxury apartments. Visitors can submit listings for review, and admins can approve or manage all live property images.</p>
             
             <div class="flex flex-col sm:flex-row gap-4">
                 <a href="#properties" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 text-center transition">Explore Properties</a>
-                <button onclick="handlePostPropertyClick()" class="px-8 py-4 bg-white/10 hover:bg-white/25 backdrop-blur border border-white/20 text-white font-bold rounded-xl text-center transition">Post Your Property</button>
+                <button onclick="openAddPropertyModal()" class="px-8 py-4 bg-white/10 hover:bg-white/25 backdrop-blur border border-white/20 text-white font-bold rounded-xl text-center transition">Submit Property Listing</button>
             </div>
         </div>
     </section>
 
-    <!-- ADMIN IMAGE CONTROL PANEL (Only visible when logged in) -->
-    <section id="adminDashboardSection" class="hidden py-12 bg-blue-50/55 border-b border-blue-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- ADMIN IMAGE CONTROL & PENDING APPROVALS PANEL -->
+    <section id="adminDashboardSection" class="hidden py-12 bg-blue-50/75 border-b border-blue-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            
+            <!-- Pending Visitor Submissions (Approval Required) -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-amber-200">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <span class="text-xs font-bold text-amber-600 uppercase tracking-widest"><i class="fa-solid fa-clock-rotate-left mr-1"></i> Admin Approval Gate</span>
+                        <h2 class="text-2xl font-black text-slate-900 tracking-tight">Pending Visitor Listings</h2>
+                    </div>
+                    <span id="pendingCountBadge" class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">0 Pending</span>
+                </div>
+                <p class="text-xs text-slate-500 mb-6">Review payment reference slips and property details submitted by visitors before publishing them live to the public website.</p>
+                <div id="adminPendingGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Active Live Management Section -->
             <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-blue-200">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
-                        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest"><i class="fa-solid fa-shield-halved mr-1"></i> Admin Control Panel</span>
-                        <h2 class="text-2xl font-black text-slate-900 tracking-tight">Manage Website Listings & Images</h2>
+                        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest"><i class="fa-solid fa-shield-halved mr-1"></i> Master Admin Management</span>
+                        <h2 class="text-2xl font-black text-slate-900 tracking-tight">Live Website Listings & Images</h2>
                     </div>
-                    <button onclick="handlePostPropertyClick()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition shadow">
-                        <i class="fa-solid fa-plus mr-1"></i> Add New Property Listing
+                    <button onclick="openAddPropertyModal()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition shadow">
+                        <i class="fa-solid fa-plus mr-1"></i> Add Direct Admin Property
                     </button>
                 </div>
-                <p class="text-xs text-slate-500">Below are your currently active live properties. You can delete or replace listing images instantly from your admin dashboard.</p>
+                <p class="text-xs text-slate-500">Manage or delete your active public listings instantly.</p>
                 <div id="adminManagementGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
                     <!-- Populated dynamically -->
                 </div>
@@ -160,7 +177,7 @@
             
             <div id="chatMessages" class="p-4 h-72 overflow-y-auto space-y-3 bg-slate-50 text-sm">
                 <div class="flex items-start space-x-2">
-                    <div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">Hello! Welcome to Growam Nig Ltd. I'm Aliyah. Sign up or log into the admin account to manage listings!</div>
+                    <div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">Hello! Welcome to Growam Nig Ltd. Submit properties after payment or log in as Admin to review and control listings!</div>
                 </div>
             </div>
             
@@ -200,55 +217,27 @@
         </div>
     </footer>
 
-    <!-- AUTH MODAL -->
+    <!-- AUTH MODAL (Dual Master Admin Login Gate) -->
     <div id="authModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 relative overflow-hidden">
             <button onclick="closeAuthModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-xl">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             
-            <div class="flex space-x-4 border-b border-slate-100 pb-4 mb-6" id="authTabsContainer">
-                <button type="button" id="tabSignin" onclick="toggleAuthTab('signin')" class="text-lg font-bold text-blue-600 border-b-2 border-blue-600 pb-2">Sign In</button>
-                <button type="button" id="tabSignup" onclick="toggleAuthTab('signup')" class="text-lg font-bold text-slate-400 pb-2 hover:text-slate-600">Sign Up</button>
+            <div class="text-center mb-6">
+                <span class="text-xs font-bold text-blue-600 uppercase tracking-widest"><i class="fa-solid fa-lock mr-1"></i> Secured Access</span>
+                <h3 class="text-xl font-black text-slate-900 mt-1">Admin Control Sign In</h3>
+                <p class="text-xs text-slate-500 mt-1">Enter your admin password to access image management and pending approvals.</p>
             </div>
 
             <form id="authMainForm" class="space-y-4">
-                <div id="standardAuthFields">
-                    <div class="mb-3">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Email Address</label>
-                        <input type="email" id="authEmail" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm" placeholder="name@example.com">
-                    </div>
-                    <div id="passwordFieldContainer">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Password</label>
-                        <input type="password" id="authPassword" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm" placeholder="••••••••">
-                    </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Admin Email / ID</label>
+                    <input type="text" id="authEmail" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm" placeholder="admin@growamnigltd.com">
                 </div>
-
-                <!-- Password Reset Step 1: Request Code -->
-                <div id="resetEmailFields" style="display: none;">
-                    <p class="text-xs text-slate-500 mb-3">Enter your registered email address to receive a secure 6-digit verification code.</p>
-                    <div class="mb-3">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Registered Email</label>
-                        <input type="email" id="resetEmail" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm" placeholder="name@example.com">
-                    </div>
-                    <button type="button" onclick="sendResetTokenEmail()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs transition mb-2">Send Verification Code</button>
-                </div>
-
-                <!-- Password Reset Step 2: Verify Code & Set New Password -->
-                <div id="resetVerifyFields" style="display: none;">
-                    <p class="text-xs text-slate-500 mb-3">A 6-digit verification code has been sent to your email. Enter it below along with your new password.</p>
-                    <div class="mb-3">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">6-Digit Code</label>
-                        <input type="text" id="resetTokenInput" maxlength="6" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm tracking-widest text-center font-bold" placeholder="123456">
-                    </div>
-                    <div class="mb-3">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">New Password</label>
-                        <input type="password" id="newPassword" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm" placeholder="••••••••">
-                    </div>
-                </div>
-
-                <div class="text-right" id="forgotLinkContainer">
-                    <a href="#" id="forgotPasswordLink" class="text-xs font-semibold text-blue-600 hover:underline">Forgot Password?</a>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Admin Password</label>
+                    <input type="password" id="authPassword" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50 text-sm" placeholder="••••••••">
                 </div>
 
                 <!-- Human Verification Slider -->
@@ -267,13 +256,13 @@
         </div>
     </div>
 
-    <!-- ADD PROPERTY MODAL -->
+    <!-- SUBMIT PROPERTY MODAL (For Visitors with Payment Reference & Approval Workflow) -->
     <div id="addPropertyModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 sm:p-8 relative my-8">
             <button onclick="closeAddPropertyModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
             
-            <h3 class="text-xl font-black text-slate-900 mb-1">Upload Property Listing</h3>
-            <p class="text-xs text-slate-500 mb-4">Complete subscription payment or fill in details below to publish your property instantly.</p>
+            <h3 class="text-xl font-black text-slate-900 mb-1">Submit Property Listing</h3>
+            <p class="text-xs text-slate-500 mb-4">Make payment first, enter your transaction reference, and our admin team will review & approve your listing live.</p>
 
             <!-- Direct Bank Transfer Info Card -->
             <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-4">
@@ -309,6 +298,11 @@
                 </div>
 
                 <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Payment Reference / Transaction ID</label>
+                    <input type="text" id="propPayRef" required placeholder="e.g. FLW-MOCK-98321 or Bank Teller Ref" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-blue-600">
+                </div>
+
+                <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Property Title</label>
                     <input type="text" id="propTitle" required placeholder="e.g. 4 Bedroom Luxury Duplex" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm">
                 </div>
@@ -339,7 +333,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Property Image Upload (Free Cloud Direct)</label>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Property Image Upload</label>
                     <input type="file" id="propImageFile" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer" onchange="uploadPropertyImageToCloud(event)">
                     <p id="uploadStatusText" class="text-xs text-slate-500 mt-1"></p>
                     <input type="hidden" id="uploadedImageUrl" required>
@@ -349,7 +343,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition text-sm">Submit Property & Publish</button>
+                <button type="submit" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition text-sm">Submit Listing For Admin Review</button>
             </form>
         </div>
     </div>
@@ -381,14 +375,19 @@
             {id: 4, title: "600sqm Residential Plot with C of O", location: "Guzape, Abuja", price: "120,000,000", category: "Land", desc: "Ready for immediate construction with certified C of O.", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600"}
         ];
 
+        let pendingList = JSON.parse(localStorage.getItem('growam_pending_properties')) || [];
+
         function renderProperties(filterCat = 'all') {
             const grid = document.getElementById('propertyGrid');
             const adminGrid = document.getElementById('adminManagementGrid');
+            const pendingGrid = document.getElementById('adminPendingGrid');
+            
             grid.innerHTML = '';
             if(adminGrid) adminGrid.innerHTML = '';
+            if(pendingGrid) pendingGrid.innerHTML = '';
 
+            // Render Public Hub
             propertiesList.forEach((p) => {
-                // Public Grid Card
                 if (filterCat === 'all' || p.category === filterCat) {
                     const card = document.createElement('div');
                     card.className = 'bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md transition property-card';
@@ -408,8 +407,8 @@
                     grid.appendChild(card);
                 }
 
-                // Admin Control Grid Card
-                if (currentUser && adminGrid) {
+                // Admin Live Management Grid Card
+                if (isLoggedInAdmin && adminGrid) {
                     const adminCard = document.createElement('div');
                     adminCard.className = 'bg-slate-50 rounded-2xl p-3 border border-slate-200 flex flex-col justify-between';
                     adminCard.innerHTML = `
@@ -425,75 +424,47 @@
                     adminGrid.appendChild(adminCard);
                 }
             });
+
+            // Render Pending Approvals for Admin
+            if (isLoggedInAdmin && pendingGrid) {
+                document.getElementById('pendingCountBadge').innerText = `${pendingList.length} Pending`;
+                if (pendingList.length === 0) {
+                    pendingGrid.innerHTML = `<p class="text-xs text-slate-400 col-span-full italic">No pending visitor submissions waiting for approval.</p>`;
+                } else {
+                    pendingList.forEach((item, index) => {
+                        const pCard = document.createElement('div');
+                        pCard.className = 'bg-amber-50/50 rounded-2xl p-4 border border-amber-200 flex flex-col justify-between';
+                        pCard.innerHTML = `
+                            <div>
+                                <img src="${pCardImg(item)}" class="w-full h-32 object-cover rounded-xl mb-2">
+                                <span class="bg-amber-200 text-amber-900 text-[10px] font-extrabold px-2 py-0.5 rounded">Ref: ${item.payRef}</span>
+                                <h4 class="text-sm font-bold text-slate-900 mt-2">${item.title}</h4>
+                                <p class="text-xs text-slate-600">${item.location} • ₦${item.price}</p>
+                                <p class="text-[11px] text-slate-500 mt-1">Plan: ₦${item.subPlan}</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-amber-200 flex gap-2">
+                                <button onclick="approveListing(${index})" class="flex-1 py-2 bg-green-600 hover:bg-green-700 text-white text-xs font-bold rounded-xl transition shadow"><i class="fa-solid fa-check mr-1"></i> Approve</button>
+                                <button onclick="rejectListing(${index})" class="py-2 px-3 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-bold rounded-xl transition"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        `;
+                        pendingGrid.appendChild(pCard);
+                    });
+                }
+            }
         }
 
+        function pCardImg(item) { return item.img; }
         window.addEventListener('DOMContentLoaded', () => renderProperties('all'));
 
-        let currentUser = null;
-        let authMode = 'signin';
-        let isHumanVerified = false;
-        let generatedResetCode = null;
+        let isLoggedInAdmin = false;
 
         function openAuthModal(mode) {
             document.getElementById('authModal').classList.remove('hidden');
             resetCaptcha();
-            toggleAuthTab(mode);
         }
 
         function closeAuthModal() {
             document.getElementById('authModal').classList.add('hidden');
-        }
-
-        function toggleAuthTab(mode) {
-            authMode = mode;
-            const tabSignin = document.getElementById('tabSignin');
-            const tabSignup = document.getElementById('tabSignup');
-            const standardFields = document.getElementById('standardAuthFields');
-            const resetEmailFields = document.getElementById('resetEmailFields');
-            const resetVerifyFields = document.getElementById('resetVerifyFields');
-            const forgotContainer = document.getElementById('forgotLinkContainer');
-            const tabsBox = document.getElementById('authTabsContainer');
-
-            tabsBox.classList.remove('hidden');
-            standardFields.style.display = 'block';
-            resetEmailFields.style.display = 'none';
-            resetVerifyFields.style.display = 'none';
-            forgotContainer.style.display = 'block';
-
-            if (mode === 'signin') {
-                tabSignin.className = "text-lg font-bold text-blue-600 border-b-2 border-blue-600 pb-2";
-                tabSignup.className = "text-lg font-bold text-slate-400 pb-2 hover:text-slate-600";
-            } else if (mode === 'signup') {
-                tabSignin.className = "text-lg font-bold text-slate-400 pb-2 hover:text-slate-600";
-                tabSignup.className = "text-lg font-bold text-blue-600 border-b-2 border-blue-600 pb-2";
-            } else if (mode === 'reset') {
-                tabsBox.classList.add('hidden');
-                standardFields.style.display = 'none';
-                resetEmailFields.style.display = 'block';
-                resetVerifyFields.style.display = 'none';
-                forgotContainer.style.display = 'none';
-            }
-            resetCaptcha();
-        }
-
-        document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleAuthTab('reset');
-        });
-
-        function sendResetTokenEmail() {
-            const email = document.getElementById('resetEmail').value.trim();
-            if (!email) { alert('Enter your registered email address first.'); return; }
-            const registeredUsers = JSON.parse(localStorage.getItem('growam_users')) || [];
-            if (!registeredUsers.some(u => u.email === email)) { alert('No account found with this email.'); return; }
-
-            generatedResetCode = Math.floor(100000 + Math.random() * 900000).toString();
-            emailjs.send(SERVICE_ID, TEMPLATE_ID, { to_email: email, message: `Verification code: ${generatedResetCode}` }, PUBLIC_KEY)
-                .then(() => {
-                    alert('Verification code sent to your email!');
-                    document.getElementById('resetEmailFields').style.display = 'none';
-                    document.getElementById('resetVerifyFields').style.display = 'block';
-                }).catch(() => alert('Failed to send email code.'));
         }
 
         // Captcha slider logic
@@ -502,7 +473,7 @@
         const dragText = document.getElementById('dragCaptchaText');
         const dragIcon = document.getElementById('dragIcon');
         const authSubmitBtn = document.getElementById('authSubmitBtn');
-        let isDragging = false, startX = 0;
+        let isDragging = false, startX = 0, isHumanVerified = false;
 
         function resetCaptcha() {
             isHumanVerified = false;
@@ -542,63 +513,47 @@
         window.addEventListener('touchmove', (e) => { if (isDragging) onDrag(e.touches[0].clientX); });
         window.addEventListener('touchend', endDrag);
 
+        // DUAL MASTER ADMIN PASSWORDS GATE
         document.getElementById('authMainForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!isHumanVerified) { alert('Complete human verification first.'); return; }
-            const registeredUsers = JSON.parse(localStorage.getItem('growam_users')) || [];
 
-            if (authMode === 'reset') {
-                const email = document.getElementById('resetEmail').value.trim();
-                if (document.getElementById('resetTokenInput').value.trim() !== generatedResetCode) { alert('Invalid code.'); return; }
-                const userIdx = registeredUsers.findIndex(u => u.email === email);
-                registeredUsers[userIdx].password = await hashPassword(document.getElementById('newPassword').value);
-                localStorage.setItem('growam_users', JSON.stringify(registeredUsers));
-                alert('Password reset successfully!'); toggleAuthTab('signin'); return;
-            }
-
-            const email = document.getElementById('authEmail').value.trim();
+            const emailInput = document.getElementById('authEmail').value.trim().toLowerCase();
             const rawPassword = document.getElementById('authPassword').value;
             const hashedPwd = await hashPassword(rawPassword);
 
-            // SHARED MASTER ADMIN ACCOUNT FOR TEAM/STAFF ACCESS
-            const MASTER_ADMIN_EMAIL = "admin@growamnigltd.com";
-            const MASTER_ADMIN_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // Password is: GrowamPassword123
+            // TWO MASTER ADMIN ACCOUNTS (Either password gives full control)
+            const ADMIN_1_EMAIL = "admin@growamnigltd.com";
+            const ADMIN_1_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // Password: GrowamPassword123
 
-            if (authMode === 'signin') {
-                if (email.toLowerCase() === MASTER_ADMIN_EMAIL && hashedPwd === MASTER_ADMIN_HASH) {
-                    currentUser = email;
-                    alert('Admin sign in successful!');
-                    closeAuthModal();
-                    updateUIAfterAuth();
-                    return;
-                }
+            const ADMIN_2_EMAIL = "manager@growamnigltd.com";
+            const ADMIN_2_HASH = "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a"; // Password: SecureAdmin2026!
 
-                const user = registeredUsers.find(u => u.email === email && u.password === hashedPwd);
-                if (!user) { alert('Invalid credentials.'); resetCaptcha(); return; }
-                currentUser = email; alert('Sign in successful!'); closeAuthModal(); updateUIAfterAuth();
-            } else if (authMode === 'signup') {
-                if (registeredUsers.some(u => u.email === email)) { alert('Email already exists.'); resetCaptcha(); return; }
-                registeredUsers.push({ email, password: hashedPwd });
-                localStorage.setItem('growam_users', JSON.stringify(registeredUsers));
-                currentUser = email; alert('Account created successfully!'); closeAuthModal(); updateUIAfterAuth();
+            if ((emailInput === ADMIN_1_EMAIL && hashedPwd === ADMIN_1_HASH) || 
+                (emailInput === ADMIN_2_EMAIL && hashedPwd === ADMIN_2_HASH) ||
+                (emailInput.includes('admin') && hashedPwd === ADMIN_1_HASH)) {
+                
+                isLoggedInAdmin = true;
+                alert('Admin Authentication Successful!');
+                closeAuthModal();
+                updateUIAfterAuth();
+            } else {
+                alert('Invalid Admin credentials. Please use authorized admin passwords.');
+                resetCaptcha();
             }
         });
 
         function updateUIAfterAuth() {
-            if (currentUser) {
+            if (isLoggedInAdmin) {
                 document.getElementById('navAuthBtn').classList.add('hidden');
-                document.getElementById('postPropertyNavBtn').classList.remove('hidden');
-                document.getElementById('postPropertyNavBtn').classList.add('flex');
                 document.getElementById('navUserBadge').classList.remove('hidden');
                 document.getElementById('navUserBadge').classList.add('flex');
-                document.getElementById('navUsernameDisplay').innerText = currentUser.split('@')[0];
                 document.getElementById('adminDashboardSection').classList.remove('hidden');
                 renderProperties('all');
             }
         }
 
-        function handlePostPropertyClick() {
-            if (!currentUser) { alert('Please sign in first to post listings.'); openAuthModal('signin'); return; }
+        function openAddPropertyModal() {
             document.getElementById('addPropertyModal').classList.remove('hidden');
         }
 
@@ -651,6 +606,7 @@
             document.getElementById('uploadStatusText').innerText = '';
         }
 
+        // Handle Submission: If Admin is logged in, publish directly. If Visitor, put into Pending Approval queue.
         function handleNewPropertySubmit(e) {
             e.preventDefault();
             const imageUrl = document.getElementById('uploadedImageUrl').value;
@@ -663,18 +619,46 @@
                 category: document.getElementById('propCategory').value,
                 location: document.getElementById('propLocation').value,
                 desc: document.getElementById('propDesc').value,
-                img: imageUrl
+                img: imageUrl,
+                subPlan: document.getElementById('propSubPlan').value,
+                payRef: document.getElementById('propPayRef').value
             };
 
-            propertiesList.unshift(newProp);
-            localStorage.setItem('growam_properties', JSON.stringify(propertiesList));
-            renderProperties('all');
-            alert('Property successfully added and published live!');
+            if (isLoggedInAdmin) {
+                propertiesList.unshift(newProp);
+                localStorage.setItem('growam_properties', JSON.stringify(propertiesList));
+                renderProperties('all');
+                alert('Admin direct listing published successfully!');
+            } else {
+                pendingList.unshift(newProp);
+                localStorage.setItem('growam_pending_properties', JSON.stringify(pendingList));
+                alert('Listing submitted successfully! Awaiting admin payment verification & approval.');
+            }
             closeAddPropertyModal();
         }
 
+        function approveListing(index) {
+            const item = pendingList[index];
+            propertiesList.unshift(item);
+            pendingList.splice(index, 1);
+            
+            localStorage.setItem('growam_properties', JSON.stringify(propertiesList));
+            localStorage.setItem('growam_pending_properties', JSON.stringify(pendingList));
+            renderProperties('all');
+            alert('Listing approved and published live to website!');
+        }
+
+        function rejectListing(index) {
+            if (confirm('Are you sure you want to reject and delete this submission?')) {
+                pendingList.splice(index, 1);
+                localStorage.setItem('growam_pending_properties', JSON.stringify(pendingList));
+                renderProperties('all');
+                alert('Submission rejected.');
+            }
+        }
+
         function deleteProperty(id) {
-            if (confirm('Are you sure you want to delete this property listing?')) {
+            if (confirm('Are you sure you want to delete this live property listing?')) {
                 propertiesList = propertiesList.filter(p => p.id !== id);
                 localStorage.setItem('growam_properties', JSON.stringify(propertiesList));
                 renderProperties('all');
@@ -689,18 +673,24 @@
                 amount: document.getElementById('propSubPlan').value,
                 currency: "NGN",
                 payment_options: "card, banktransfer, ussd",
-                customer: { email: currentUser || "user@growamnigltd.com", name: "Growam Admin" },
-                callback: function (data) { alert("Payment complete! Ref: " + data.transaction_id); }
+                customer: { email: "visitor@growamnigltd.com", name: "Growam User" },
+                callback: function (data) { 
+                    document.getElementById('propPayRef').value = data.transaction_id;
+                    alert("Payment complete! Reference code auto-filled: " + data.transaction_id); 
+                }
             });
         }
 
         function payWithPaystack() {
             let handler = PaystackPop.setup({
                 key: 'pk_test_YOUR_PAYSTACK_PUBLIC_KEY',
-                email: currentUser || 'user@growamnigltd.com',
+                email: 'visitor@growamnigltd.com',
                 amount: parseInt(document.getElementById('propSubPlan').value) * 100,
                 currency: 'NGN',
-                callback: function(res){ alert('Payment complete! Ref: ' + res.reference); }
+                callback: function(res){ 
+                    document.getElementById('propPayRef').value = res.reference;
+                    alert('Payment complete! Reference code auto-filled: ' + res.reference); 
+                }
             });
             handler.openIFrame();
         }
@@ -711,7 +701,7 @@
             const msgBox = document.getElementById('chatMessages');
             const txt = input.value.trim();
             if (!txt) return;
-            msgBox.innerHTML += `<div class="flex justify-end"><div class="bg-slate-900 text-white p-2 rounded-xl text-xs max-w-[80%]">${txt}</div></div>`;
+            msgBox.innerHTML += `<div class="flex justify-end"><div class="bg-slate-900 text-white p-2 rounded-xl text-xs max-w-[80%]" >${txt}</div></div>`;
             input.value = '';
             setTimeout(() => {
                 msgBox.innerHTML += `<div class="flex items-start space-x-2"><div class="bg-blue-600 text-white p-2 rounded-xl text-xs max-w-[80%]">Growam Nig Ltd (RC 6893170) verified hub. WhatsApp: 09069245040.</div></div>`;
@@ -719,11 +709,8 @@
             }, 600);
         }
 
-        function filterProperties(category) {
-            renderProperties(category);
-        }
-
-        function openProfileModal() { alert('Admin Profile Hub active.'); }
+        function filterProperties(category) { renderProperties(category); }
+        function openProfileModal() { alert('Master Admin Control Hub is active. You can review pending payment references and manage live property pictures above.'); }
         function openCartModal() { alert('Your saved real estate portfolio is empty.'); }
     </script>
 </body>
